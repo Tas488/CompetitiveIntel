@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAP Competitive Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ===== Auth Gate ===== */
+#auth-overlay{position:fixed;inset:0;z-index:9999;background:#f3f3ef;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif}
+#auth-overlay.hidden{display:none}
+.auth-card{background:#fff;border:1px solid #E0E0E0;border-radius:16px;padding:36px 32px 28px;width:100%;max-width:400px;box-shadow:0 4px 24px rgba(0,0,0,.07)}
+.auth-logo{display:flex;justify-content:center;margin-bottom:32px}
+.auth-logo img{height:44px;width:auto}
+.auth-title{font-size:20px;font-weight:600;color:#0f1117;text-align:center;margin-bottom:6px;font-family:'Poppins',sans-serif}
+.auth-subtitle{font-size:13px;color:#717182;text-align:center;margin-bottom:28px;font-family:'Poppins',sans-serif}
+.auth-label{display:block;font-size:13px;font-weight:500;color:#374151;margin-bottom:6px;font-family:'Poppins',sans-serif}
+.auth-input{width:100%;padding:10px 14px;border:1px solid #E0E0E0;border-radius:8px;font-size:14px;font-family:'Poppins',sans-serif;color:#0f1117;outline:none;transition:border-color .15s,box-shadow .15s}
+.auth-input:focus{border-color:#1a56db;box-shadow:0 0 0 3px rgba(26,86,219,.12)}
+.auth-input.error{border-color:#d4183d;box-shadow:0 0 0 3px rgba(212,24,61,.1)}
+.auth-error{font-size:12px;color:#d4183d;margin-top:6px;min-height:16px;font-family:'Poppins',sans-serif}
+.auth-btn-primary{width:100%;margin-top:20px;padding:11px 0;background:#1a56db;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;font-family:'Poppins',sans-serif;cursor:pointer;transition:background .15s,opacity .15s;letter-spacing:.01em}
+.auth-btn-primary:hover:not(:disabled){background:#1240a8}
+.auth-btn-primary:disabled{opacity:.65;cursor:not-allowed}
+.auth-btn-sso{width:100%;margin-top:10px;padding:11px 0;background:#fff;color:#9ca3af;border:1px solid #E0E0E0;border-radius:8px;font-size:14px;font-weight:500;font-family:'Poppins',sans-serif;cursor:not-allowed;display:flex;align-items:center;justify-content:center;gap:8px}
+.auth-divider{display:flex;align-items:center;gap:10px;margin:18px 0 0}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:#E0E0E0}
+.auth-divider span{font-size:12px;color:#9ca3af;font-family:'Poppins',sans-serif;white-space:nowrap}
+.auth-footer{margin-top:24px;text-align:center;font-size:12px;color:#717182;font-family:'Poppins',sans-serif;line-height:1.6}
+.auth-footer a{color:#1a56db;text-decoration:none}
+.auth-footer a:hover{text-decoration:underline}
+:root{
+  --ink:#0f1117;--ink2:#374151;--ink3:#6b7280;--ink4:#9ca3af;
+  --bg:#f3f3ef;--sf:#fff;--bd:#e5e5e0;--bdl:#edede9;
+  --tap:#1a56db;--tapl:#eff4ff;--tapd:#1240a8;
+  --hi:#dc2626;--hil:#fef2f2;--hibd:#fecaca;
+  --md:#d97706;--mdl:#fffbeb;--mdbd:#fde68a;
+  --lo:#16a34a;--lol:#f0fdf4;--lobd:#bbf7d0;
+  --r:10px;--r2:12px;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px}
+
+/* Header */
+header{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 32px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{display:flex;align-items:center}.logo img{height:28px}
+.hdr-r{display:flex;align-items:center;gap:12px}
+#lu{font-size:12px;color:var(--ink3)}
+.live-badge{font-size:11px;padding:3px 10px;border-radius:20px;font-weight:500;background:#f0fdf4;color:#166534;border:0.5px solid #bbf7d0}
+
+/* Pulse Bar */
+.pulse-bar{background:#090d18;border-bottom:1px solid #1e2638}
+.sowhat-row{padding:12px 32px;display:flex;align-items:flex-start;gap:14px;border-bottom:1px solid #1e2638;flex-wrap:wrap}
+.sw-label{font-size:9.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#fbbf24;white-space:nowrap;flex-shrink:0;margin-top:3px}
+.sw-text{font-size:13.5px;color:#f3f4f6;line-height:1.55;font-weight:500}
+.ticker-outer{overflow:hidden;padding:9px 0;position:relative}
+.ticker-outer::before,.ticker-outer::after{content:'';position:absolute;top:0;bottom:0;width:48px;z-index:1;pointer-events:none}
+.ticker-outer::before{left:0;background:linear-gradient(to right,#090d18,transparent)}
+.ticker-outer::after{right:0;background:linear-gradient(to left,#090d18,transparent)}
+.ticker-track{display:flex;animation:ticker-scroll 55s linear infinite;width:max-content}
+.ticker-track:hover{animation-play-state:paused}
+@keyframes ticker-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.t-item{display:flex;align-items:center;gap:8px;padding:2px 28px;white-space:nowrap;font-size:14px;border-right:1px solid #1e2638}
+.t-win{color:#4ade80;font-weight:700;font-size:13px}
+.t-loss{color:#f87171;font-weight:700;font-size:13px}
+.t-comp{color:#93c5fd;font-size:13px;font-weight:500}
+.t-ctx{color:#a8b4c4;font-size:12.5px}
+.t-reason{color:#c8d3e0;font-size:12.5px;font-style:italic}
+
+/* Layout */
+main{max-width:1160px;margin:0 auto;padding:32px 32px 80px}
+.section{margin-top:40px;padding-top:40px;border-top:1px solid var(--bd)}
+.section:first-child{margin-top:0;padding-top:0;border-top:none}
+.sec-hd{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+.sec-hd-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sec-hd h2{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.sec-hd-sub{font-size:12px;color:var(--ink4)}
+
+/* Alert Cards */
+.alerts-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:20px}
+.alert-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.alert-card.critical{border-left:4px solid var(--hi)}
+.alert-card.warning{border-left:4px solid var(--md)}
+.alert-card.info{border-left:4px solid var(--tap)}
+.alert-hd{padding:11px 15px 10px;border-bottom:1px solid var(--bdl);display:flex;align-items:flex-start;gap:10px}
+.alert-sev{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:20px;flex-shrink:0;margin-top:2px}
+.alert-sev.critical{background:var(--hil);color:var(--hi);border:0.5px solid var(--hibd)}
+.alert-sev.warning{background:var(--mdl);color:var(--md);border:0.5px solid var(--mdbd)}
+.alert-sev.info{background:var(--tapl);color:var(--tap);border:0.5px solid #c3d9ff}
+.alert-headline{font-size:13.5px;font-weight:600;line-height:1.35}
+.alert-body{padding:11px 15px 13px}
+.alert-impact{font-size:12px;font-weight:600;color:var(--md);margin-bottom:6px}
+.alert-detail{font-size:12px;color:var(--ink2);line-height:1.6;margin-bottom:8px}
+.alert-action{font-size:11.5px;padding:7px 10px;background:var(--bdl);border-radius:6px;color:var(--ink2);line-height:1.5}
+.alert-action b{color:var(--ink);font-weight:600}
+
+/* Threat Delta */
+.threat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.threat-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;gap:14px}
+.tc-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.tc-info{flex:1}
+.tc-name{font-size:14px;font-weight:600;margin-bottom:4px}
+.tc-badges{display:flex;align-items:center;gap:7px}
+.tc-badge{font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;letter-spacing:.04em;text-transform:uppercase}
+.th{background:var(--hil);color:var(--hi);border:0.5px solid var(--hibd)}
+.tm{background:var(--mdl);color:var(--md);border:0.5px solid var(--mdbd)}
+.tl{background:var(--lol);color:var(--lo);border:0.5px solid var(--lobd)}
+.tc-delta-wrap{text-align:center;flex-shrink:0}
+.tc-delta{font-size:26px;line-height:1;font-weight:800}
+.tc-delta-lbl{font-size:10px;color:var(--ink4);margin-top:2px}
+.delta-up{color:var(--hi)}.delta-down{color:var(--lo)}.delta-stable{color:var(--ink4)}
+
+/* Matrix */
+.matrix-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.panel{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;display:flex;flex-direction:column}
+.panel-hd{padding:14px 18px 12px;border-bottom:1px solid var(--bdl);flex-shrink:0}
+.panel-title{font-size:14px;font-weight:600;margin-bottom:2px}
+.panel-sub{font-size:12px;color:var(--ink3)}
+.panel-body{padding:16px 18px;flex:1}
+.radar-wrap{padding:16px 18px 8px;flex:1}
+.radar-legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px 18px 14px;border-top:1px solid var(--bdl);flex-shrink:0}
+.rl-item{display:flex;align-items:center;gap:5px;font-size:11.5px;color:var(--ink2)}
+.rl-swatch{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* Score Table */
+.score-table{width:100%;border-collapse:collapse}
+.score-table th{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);padding:0 6px 10px;text-align:left}
+.score-table th:first-child{padding-left:0;min-width:90px}
+.score-table td{padding:6px;border-top:1px solid var(--bdl);vertical-align:middle}
+.score-table td:first-child{padding-left:0;font-size:12px;font-weight:500;color:var(--ink2)}
+.bar-wrap{display:flex;align-items:center;gap:5px}
+.bar-bg{flex:1;height:5px;background:var(--bdl);border-radius:3px;position:relative;overflow:hidden;min-width:40px}
+.bar-fill{height:5px;border-radius:3px;position:absolute;left:0;top:0}
+.bar-num{font-size:11px;color:var(--ink3);width:14px;text-align:right;flex-shrink:0}
+
+/* White Space */
+.ws-box{margin:0 18px 16px;padding:12px 14px;background:linear-gradient(135deg,var(--tapl),#f0fdf4);border-radius:var(--r);border:1px solid #c3d9ff;flex-shrink:0}
+.ws-label{font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tap);margin-bottom:7px}
+.ws-items{display:flex;flex-wrap:wrap;gap:6px}
+.ws-pill{font-size:11.5px;padding:3px 11px;border-radius:20px;background:#fff;border:1px solid #c3d9ff;color:var(--ink2);font-weight:500}
+
+/* Kill Zone */
+.kill-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.kill-card{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden;display:flex;flex-direction:column}
+.kill-hd{padding:12px 16px 11px;border-bottom:1px solid var(--bdl);display:flex;align-items:center;gap:10px}
+.kill-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.kill-name{font-size:16px;font-weight:700}
+.kill-body{padding:14px 16px;display:flex;flex-direction:column;gap:14px;flex:1}
+.sb-box{background:linear-gradient(135deg,#fffbeb,#fff7ed);border:1px solid #fde68a;border-radius:8px;padding:12px 13px}
+.sb-label{font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#92400e;margin-bottom:6px}
+.sb-text{font-size:13px;font-weight:600;color:var(--ink);line-height:1.5}
+.sub-label{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink4);margin-bottom:8px}
+.lm-list{list-style:none;display:flex;flex-direction:column;gap:6px}
+.lm-q{font-size:12.5px;color:var(--ink2);padding:8px 12px;background:var(--bdl);border-radius:7px;line-height:1.5;border-left:2px solid var(--md)}
+.cn-list{display:flex;flex-direction:column;gap:7px}
+.cn-item{border-radius:8px;overflow:hidden;border:1px solid var(--hibd)}
+.cn-tog{width:100%;display:flex;align-items:flex-start;gap:8px;padding:8px 11px;background:#fef2f2;border:none;cursor:pointer;text-align:left;font-family:inherit;transition:background .1s}
+.cn-tog:hover{background:#fee2e2}
+.cn-claim{font-size:12px;color:#991b1b;font-style:italic;flex:1;line-height:1.45}
+.cn-chv{font-size:14px;font-weight:700;color:var(--ink4);flex-shrink:0;width:18px;text-align:center;line-height:1.6}
+.cn-chv::before{content:'+'}
+.cn-item.open .cn-chv::before{content:'−'}
+.cn-det{display:none;font-size:12px;color:var(--ink2);padding:8px 11px;border-top:1px solid var(--hibd);background:var(--sf);line-height:1.65}
+.cn-item.open .cn-det{display:block}
+
+/* Deep Dives */
+.dd-list{display:flex;flex-direction:column;gap:14px}
+.dd-comp{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r2);overflow:hidden}
+.dd-tog{width:100%;display:flex;align-items:center;gap:12px;padding:14px 18px;background:none;border:none;cursor:pointer;font-family:inherit;transition:background .15s;text-align:left}
+.dd-tog:hover{background:var(--bdl)}
+.dd-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.dd-meta{flex:1}
+.dd-name{font-size:15px;font-weight:600;color:var(--ink)}
+.dd-tag{font-size:12px;color:var(--ink3);margin-top:1px}
+.dd-chv{font-size:20px;font-weight:700;color:var(--ink4);line-height:1;transition:transform .2s;flex-shrink:0}
+.dd-comp.open .dd-chv{transform:rotate(45deg)}
+.dd-body{display:none;padding:0 18px 18px;border-top:1px solid var(--bdl)}
+.dd-comp.open .dd-body{display:block}
+.dd-inner{padding-top:16px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.sublbl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);margin:12px 0 7px}
+.sublbl:first-child{margin-top:0}
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.pill{font-size:11px;padding:3px 9px;border-radius:20px;border:1px solid var(--bd);color:var(--ink2);background:var(--bg)}
+.swlist{list-style:none;display:flex;flex-direction:column;gap:5px}
+.swi{border-radius:8px;overflow:hidden;border:1px solid var(--bdl);background:var(--sf)}
+.swi.g{border-color:#bbf7d0;background:#f0fdf4}.swi.r{border-color:#fecaca;background:#fff8f8}
+.swtog{display:flex;align-items:center;gap:8px;width:100%;background:none;border:none;padding:8px 11px;cursor:pointer;text-align:left;font-family:inherit;transition:background .1s}
+.swi.g .swtog:hover{background:#dcfce7}.swi.r .swtog:hover{background:#fee2e2}
+.swdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.swi.g .swdot{background:#16a34a}.swi.r .swdot{background:#dc2626}
+.swtit{font-size:12.5px;font-weight:500;color:var(--ink);flex:1;line-height:1.4}
+.swchv{font-size:14px;font-weight:700;color:var(--ink3);flex-shrink:0;width:18px;text-align:center;line-height:1}
+.swchv::before{content:'+'}
+.swi.open .swchv::before{content:'−'}
+.swdet{display:none;font-size:12px;color:var(--ink2);line-height:1.65;padding:8px 11px 10px 26px;border-top:1px solid rgba(0,0,0,.06)}
+.swi.g .swdet{border-top-color:#d1fae5}.swi.r .swdet{border-top-color:#fee2e2}
+.swi.open .swdet{display:block}
+.src{margin-top:6px;font-size:10.5px;color:var(--ink3);padding:4px 8px;background:rgba(0,0,0,.03);border-radius:5px;border-left:2px solid var(--bd)}
+.src b{color:var(--ink2);font-weight:600}
+.scores{margin-top:2px}
+.sr{display:flex;align-items:center;gap:7px;margin:4px 0}
+.slbl{font-size:11px;color:var(--ink3);width:90px;flex-shrink:0}
+.strk{flex:1;height:4px;background:var(--bdl);border-radius:2px}
+.sfil{height:4px;border-radius:2px}
+.snum{font-size:11px;color:var(--ink3);width:18px;text-align:right}
+.rmcard{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);overflow:hidden}
+.rmhd{padding:11px 16px 10px;border-bottom:1px solid var(--bdl);display:flex;align-items:center;gap:9px}
+.rmdot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.rmname{font-size:14px;font-weight:600}
+.rmbody{padding:12px 16px}
+.rmsec{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin:0 0 7px;display:flex;align-items:center;gap:6px}
+.rmico{width:15px;height:15px;border-radius:3px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0}
+.ig{background:#dcfce7;color:#15803d}.ib{background:#dbeafe;color:#1d4ed8}.ip{background:#f3e8ff;color:#7e22ce}
+.rmlist{list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:12px}
+.rmi{border-radius:7px;border:1px solid var(--bdl);overflow:hidden}
+.rmi.ai{background:#faf5ff;border-color:#e9d5ff}
+.rmtog{display:flex;align-items:flex-start;gap:7px;width:100%;background:none;border:none;padding:7px 9px;cursor:pointer;text-align:left;font-family:inherit;transition:background .1s}
+.rmtog:hover{background:var(--bdl)}.rmi.ai .rmtog:hover{background:#f3e8ff}
+.rmtag{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;flex-shrink:0;margin-top:1px;letter-spacing:.03em}
+.ts{background:#dcfce7;color:#15803d}.tc{background:#dbeafe;color:#1d4ed8}
+.tp{background:#fef9c3;color:#854d0e}.tr{background:#f3f4f6;color:#4b5563}.ta{background:#f3e8ff;color:#7e22ce}
+.rmtit{font-size:12.5px;font-weight:500;color:var(--ink);flex:1;line-height:1.4}
+.rmchv{font-size:14px;font-weight:700;color:var(--ink3);flex-shrink:0;width:18px;text-align:center;line-height:1;margin-top:1px}
+.rmchv::before{content:'+'}
+.rmi.open .rmchv::before{content:'−'}
+.rmdet{display:none;font-size:12px;color:var(--ink2);line-height:1.65;padding:8px 9px 10px 23px;border-top:1px solid var(--bdl)}
+.rmi.open .rmdet{display:block}
+.bcard{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:15px 17px}
+.bvs{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink4);margin-bottom:5px}
+.bbody{font-size:13px;color:var(--ink2);line-height:1.65}
+.wcard{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r);padding:14px 17px}
+.whd{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.wdot{width:8px;height:8px;border-radius:50%}
+.wname{font-size:13px;font-weight:600}
+.wbody{font-size:13px;color:var(--ink2);line-height:1.65}
+
+/* Designer Intel card */
+.dcard{background:var(--sf);border:1px solid #ddd6fe;border-radius:var(--r);overflow:hidden}
+.dc-hd{padding:11px 15px 10px;background:#faf5ff;border-bottom:1px solid #ddd6fe;display:flex;align-items:center;gap:8px}
+.dc-ico{font-size:13px;color:#7c3aed}
+.dc-title{font-size:13px;font-weight:600;color:#5b21b6}
+.dc-body{padding:13px 15px;display:flex;flex-direction:column;gap:11px}
+.dc-lbl{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#7c3aed;margin-bottom:5px}
+.dc-swatches{display:flex;gap:7px;flex-wrap:wrap}
+.dc-swatch{width:28px;height:28px;border-radius:6px;border:1px solid rgba(0,0,0,.1);cursor:default;position:relative;flex-shrink:0}
+.dc-swatch:hover::after{content:attr(title);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);background:#1f2937;color:#fff;font-size:10px;padding:2px 7px;border-radius:4px;white-space:nowrap;pointer-events:none;z-index:10}
+.dc-text{font-size:12.5px;color:var(--ink2);line-height:1.6}
+.dc-tags{display:flex;flex-wrap:wrap;gap:5px}
+.dc-tag{font-size:11px;padding:3px 9px;border-radius:20px;font-weight:500}
+.dc-tag.g{background:#f0fdf4;color:#166534;border:0.5px solid #bbf7d0}
+.dc-tag.a{background:#fffbeb;color:#92400e;border:0.5px solid #fde68a}
+.dc-watch{font-size:12px;color:#6d28d9;line-height:1.55;padding:8px 10px;background:#faf5ff;border-radius:6px;border-left:2px solid #c4b5fd;font-style:italic}
+
+/* Skeleton */
+.sk{background:linear-gradient(90deg,var(--bdl) 25%,var(--bd) 50%,var(--bdl) 75%);background-size:200% 100%;animation:shim 1.4s infinite;border-radius:4px;display:block}
+@keyframes shim{to{background-position:-200% 0}}
+
+footer{border-top:1px solid var(--bd);padding:18px 32px;text-align:center;font-size:12px;color:var(--ink4)}
+
+@media(max-width:960px){
+  .matrix-grid,.kill-grid{grid-template-columns:1fr}
+  .threat-row{grid-template-columns:1fr 1fr}
+  main{padding:20px 18px 60px}
+  header{padding:0 18px}
+  .sowhat-row{padding:11px 18px}
+}
+@media(max-width:640px){
+  .threat-row{grid-template-columns:1fr}
+  .alerts-row{grid-template-columns:1fr}
+  .g2{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- Auth Gate Overlay -->
+<div id="auth-overlay">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <img src="mitratech-logo.svg" alt="Mitratech">
+    </div>
+    <h1 class="auth-title">This page is private</h1>
+    <p class="auth-subtitle">Enter your password to access the TAP Competitive Intelligence dashboard.</p>
+    <form id="auth-form" autocomplete="off" onsubmit="return false">
+      <label class="auth-label" for="auth-password">Password</label>
+      <input id="auth-password" class="auth-input" type="password" placeholder="Enter password" autocomplete="current-password">
+      <div class="auth-error" id="auth-error-msg"></div>
+      <button id="auth-submit" class="auth-btn-primary" type="submit">Continue with Password</button>
+      <div class="auth-divider"><span>or</span></div>
+      <button class="auth-btn-sso" type="button" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Sign in with SSO
+      </button>
+    </form>
+    <p class="auth-footer">Need access? Contact your Mitratech team admin.<br>
+      <a href="mailto:tasmin.shaik@mitratech.com">tasmin.shaik@mitratech.com</a>
+    </p>
+  </div>
+</div>
+
+<header>
+  <a class="logo" href="#"><img src="logo.svg" alt="TAP Workflow Automation"></a>
+  <div class="hdr-r">
+    <span id="lu" style="font-size:12px;color:var(--ink3)">Loading latest intel...</span>
+    <span class="live-badge">&#9679; Auto-updates every Monday</span>
+  </div>
+</header>
+
+<div class="pulse-bar">
+  <div class="sowhat-row">
+    <span class="sw-label">&#9889; This Week</span>
+    <span class="sw-text" id="sw-text">Loading strategic insight...</span>
+  </div>
+  <div class="ticker-outer">
+    <div class="ticker-track" id="ticker-track"></div>
+  </div>
+</div>
+
+<main>
+
+  <!-- I. Critical Alerts -->
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-hd-dot" style="background:var(--hi)"></div>
+      <h2>Critical Alerts</h2>
+    </div>
+    <div class="alerts-row" id="alerts-row"></div>
+    <div class="threat-row" id="threat-row"></div>
+  </div>
+
+  <!-- II. The Matrix -->
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-hd-dot" style="background:var(--tap)"></div>
+      <h2>The Competitive Matrix</h2>
+    </div>
+    <div class="matrix-grid">
+      <div class="panel">
+        <div class="panel-hd">
+          <div class="panel-title">Capability Radar</div>
+          <div class="panel-sub">TAP (solid blue) vs competitors — outer = stronger</div>
+        </div>
+        <div class="radar-wrap">
+          <div id="radar-chart"></div>
+        </div>
+        <div class="radar-legend" id="radar-legend"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-hd">
+          <div class="panel-title">Score Breakdown</div>
+          <div class="panel-sub">TAP vs competitor benchmarks — green = TAP leads</div>
+        </div>
+        <div class="panel-body">
+          <table class="score-table" id="score-table"></table>
+        </div>
+        <div class="ws-box">
+          <div class="ws-label">&#9670; TAP White Space — Undisputed Wins</div>
+          <div class="ws-items" id="ws-items"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- III. Kill Zone -->
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-hd-dot" style="background:#b45309"></div>
+      <h2>Kill Zone</h2>
+      <span class="sec-hd-sub">— Silver bullets, landmine questions &amp; counter-narratives</span>
+    </div>
+    <div class="kill-grid" id="kill-grid"></div>
+  </div>
+
+  <!-- IV. Deep Dives -->
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-hd-dot" style="background:var(--ink4)"></div>
+      <h2>Deep Dives</h2>
+      <span class="sec-hd-sub">— Full profiles, roadmaps &amp; battlecards</span>
+    </div>
+    <div class="dd-list" id="dd-list"></div>
+  </div>
+
+</main>
+
+<footer>TAP (ThinkSmart Automation Platform) &middot; Competitive Intelligence &middot; Refreshes weekly via Claude AI</footer>
+
+<script>
+/* === Constants === */
+var TAP_SCORES = {easeOfUse:8,aiCapability:7,breadth:8,enterpriseScale:7,timeToValue:9,priceCompetitiveness:8};
+var CM = {checkbox:'#0a7c5c',servicenow:'#1a56db',tonkean:'#6b48d4'};
+var AXES = [
+  {key:'easeOfUse',label:'Ease of Use'},
+  {key:'aiCapability',label:'AI Capability'},
+  {key:'breadth',label:'Breadth'},
+  {key:'enterpriseScale',label:'Enterprise'},
+  {key:'timeToValue',label:'Time to Value'},
+  {key:'priceCompetitiveness',label:'Price'}
+];
+
+/* === Utils === */
+function x(s){if(!s)return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function tog(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');}
+
+/* === Radar Chart === */
+function buildRadar(competitors) {
+  var VW=400,VH=400,cx=200,cy=200,R=140;
+  var N=AXES.length;
+  function ang(i){return (i/N)*2*Math.PI - Math.PI/2;}
+  function pt(val,i){var a=ang(i),r=(val/10)*R;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];}
+  function polyPts(scores){return AXES.map(function(ax,i){return pt(scores[ax.key]||0,i);});}
+  function ptsToPath(pts){return pts.map(function(p,i){return (i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1);}).join(' ')+'Z';}
+
+  var s='<svg viewBox="0 0 '+VW+' '+VH+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:0 auto;overflow:visible">';
+
+  /* Grid rings */
+  [2,4,6,8,10].forEach(function(v){
+    var gs={};AXES.forEach(function(ax){gs[ax.key]=v;});
+    s+='<path d="'+ptsToPath(polyPts(gs))+'" fill="none" stroke="'+(v===10?'#d1d5db':'#e9e9e4')+'" stroke-width="'+(v===10?1.5:0.8)+'"/>';
+  });
+
+  /* Axis lines */
+  AXES.forEach(function(ax,i){
+    var p=pt(10,i);
+    s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'" stroke="#e9e9e4" stroke-width="1"/>';
+  });
+
+  /* Grid value labels on first axis */
+  [2,4,6,8,10].forEach(function(v){
+    var p=pt(v,0);
+    s+='<text x="'+(p[0]+4).toFixed(1)+'" y="'+p[1].toFixed(1)+'" font-size="8.5" fill="#c0c0b8" dy="0.35em" font-family="sans-serif">'+v+'</text>';
+  });
+
+  /* Competitor polygons */
+  competitors.forEach(function(c){
+    var col=CM[c.id]||'#888';
+    var pts=polyPts(c.scores);
+    s+='<path d="'+ptsToPath(pts)+'" fill="'+col+'" fill-opacity="0.1" stroke="'+col+'" stroke-width="1.5"/>';
+    pts.forEach(function(p){s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3" fill="'+col+'" opacity="0.7"/>';});
+  });
+
+  /* TAP polygon — on top */
+  var tapPts=polyPts(TAP_SCORES);
+  s+='<path d="'+ptsToPath(tapPts)+'" fill="#1a56db" fill-opacity="0.18" stroke="#1a56db" stroke-width="2.5"/>';
+  tapPts.forEach(function(p){s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" fill="#1a56db"/>';});
+
+  /* Axis labels */
+  var LR=R+26;
+  AXES.forEach(function(ax,i){
+    var a=ang(i);
+    var lx=cx+LR*Math.cos(a),ly=cy+LR*Math.sin(a);
+    var ca=Math.cos(a),sa=Math.sin(a);
+    var anch=Math.abs(ca)<0.12?'middle':(ca<0?'end':'start');
+    var dy=Math.abs(sa)<0.12?'0.35em':(sa<0?'0':'1.1em');
+    s+='<text x="'+lx.toFixed(1)+'" y="'+ly.toFixed(1)+'" text-anchor="'+anch+'" dy="'+dy+'" font-size="10.5" fill="#6b7280" font-weight="500" font-family="-apple-system,sans-serif">'+ax.label+'</text>';
+  });
+
+  s+='</svg>';
+  return s;
+}
+
+/* === Score Table === */
+function buildScoreTable(competitors) {
+  var html='<thead><tr><th></th><th style="color:var(--tapd);font-weight:800">TAP</th>';
+  competitors.forEach(function(c){html+='<th style="color:'+(CM[c.id]||'#888')+'">'+x(c.name)+'</th>';});
+  html+='</tr></thead><tbody>';
+  AXES.forEach(function(ax){
+    var tv=TAP_SCORES[ax.key];
+    html+='<tr><td>'+ax.label+'</td>';
+    html+='<td style="background:var(--tapl)"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:'+tv*10+'%;background:var(--tap)"></div></div><span class="bar-num" style="color:var(--tapd);font-weight:700">'+tv+'</span></div></td>';
+    competitors.forEach(function(c){
+      var cv=c.scores[ax.key]||0;
+      var col=CM[c.id]||'#888';
+      var lead=(tv-cv>=2)?'background:#f0fdf4':'';
+      html+='<td style="'+lead+'"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:'+cv*10+'%;background:'+col+'"></div></div><span class="bar-num">'+cv+'</span></div></td>';
+    });
+    html+='</tr>';
+  });
+  html+='</tbody>';
+  return html;
+}
+
+/* === White Space === */
+function buildWhiteSpace(competitors) {
+  var leaders=AXES.filter(function(ax){
+    var tv=TAP_SCORES[ax.key];
+    var mx=Math.max.apply(null,competitors.map(function(c){return c.scores[ax.key]||0;}));
+    return tv>=mx;
+  });
+  if(!leaders.length)return '<span class="ws-pill" style="color:var(--ink3)">No clear leads vs all competitors</span>';
+  return leaders.map(function(ax){return '<span class="ws-pill">'+ax.label+'</span>';}).join('');
+}
+
+/* === Ticker === */
+function buildTicker(winLoss) {
+  if(!winLoss||!winLoss.length)return '';
+  var items=winLoss.map(function(wl){
+    var oc=wl.outcome==='win'?'t-win':'t-loss';
+    var lbl=wl.outcome==='win'?'&#10003; WON':'&#10005; LOST';
+    var comp=wl.competitor.charAt(0).toUpperCase()+wl.competitor.slice(1);
+    return '<div class="t-item"><span class="'+oc+'">'+lbl+'</span><span class="t-comp">vs '+x(comp)+'</span><span class="t-ctx">'+x(wl.context)+'</span><span class="t-reason">'+x(wl.reason)+'</span></div>';
+  }).join('');
+  return items+items; /* duplicate for seamless loop */
+}
+
+/* === Alerts === */
+function buildAlerts(alerts) {
+  if(!alerts||!alerts.length)return '<div class="alert-card info"><div class="alert-hd"><span class="alert-sev info">Info</span><span class="alert-headline">No active alerts — first refresh runs Monday 7am UTC.</span></div></div>';
+  return alerts.map(function(a){
+    return '<div class="alert-card '+x(a.severity)+'">'
+      +'<div class="alert-hd"><span class="alert-sev '+x(a.severity)+'">'+x(a.severity)+'</span><span class="alert-headline">'+x(a.headline)+'</span></div>'
+      +'<div class="alert-body">'
+        +'<div class="alert-impact">'+x(a.impact)+'</div>'
+        +'<div class="alert-detail">'+x(a.detail)+'</div>'
+        +'<div class="alert-action"><b>Action:</b> '+x(a.action)+'</div>'
+      +'</div></div>';
+  }).join('');
+}
+
+/* === Threat Delta === */
+function buildThreatRow(competitors) {
+  return competitors.map(function(c){
+    var col=CM[c.id]||'#888';
+    var tc=c.threat==='high'?'th':c.threat==='medium'?'tm':'tl';
+    var tl=c.threat==='high'?'High threat':c.threat==='medium'?'Medium threat':'Low threat';
+    var delta=c.threatDelta||'stable';
+    var dchar=delta==='up'?'↑':delta==='down'?'↓':'→';
+    var dcls=delta==='up'?'delta-up':delta==='down'?'delta-down':'delta-stable';
+    var dlbl=delta==='up'?'Rising':delta==='down'?'Declining':'Stable';
+    return '<div class="threat-card">'
+      +'<div class="tc-dot" style="background:'+col+'"></div>'
+      +'<div class="tc-info"><div class="tc-name">'+x(c.name)+'</div><div class="tc-badges"><span class="tc-badge '+tc+'">'+tl+'</span></div></div>'
+      +'<div class="tc-delta-wrap"><div class="tc-delta '+dcls+'">'+dchar+'</div><div class="tc-delta-lbl">'+dlbl+'</div></div>'
+    +'</div>';
+  }).join('');
+}
+
+/* === Kill Zone === */
+function buildKillGrid(competitors) {
+  return competitors.map(function(c){
+    var col=CM[c.id]||'#888';
+    var lmHtml=(c.landmineQuestions||[]).map(function(q){
+      return '<li class="lm-q">'+x(q)+'</li>';
+    }).join('');
+    var cnHtml=(c.counterNarratives||[]).map(function(cn,i){
+      var uid='cn-'+c.id+'-'+i;
+      return '<div class="cn-item" id="'+uid+'">'
+        +'<button class="cn-tog" onclick="tog(\''+uid+'\')">'
+          +'<span class="cn-claim">&#8220;'+x(cn.claim)+'&#8221;</span>'
+          +'<span class="cn-chv"></span>'
+        +'</button>'
+        +'<div class="cn-det">'+x(cn.rebuttal)+'</div>'
+      +'</div>';
+    }).join('');
+    return '<div class="kill-card" style="border-top:3px solid '+col+'">'
+      +'<div class="kill-hd"><div class="kill-dot" style="background:'+col+'"></div><span class="kill-name">'+x(c.name)+'</span></div>'
+      +'<div class="kill-body">'
+        +(c.silverBullet?'<div class="sb-box"><div class="sb-label">&#9679; Silver Bullet</div><div class="sb-text">'+x(c.silverBullet)+'</div></div>':'')
+        +(lmHtml?'<div><div class="sub-label">&#63; Landmine Questions</div><ul class="lm-list">'+lmHtml+'</ul></div>':'')
+        +(cnHtml?'<div><div class="sub-label">&#8224; Counter-Narratives</div><div class="cn-list">'+cnHtml+'</div></div>':'')
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+/* === Designer Intel Card === */
+function buildDesignerCard(c) {
+  var di = c.designerIntel;
+  if (!di) return '';
+  var swatches = (di.brandColors||[]).map(function(col){
+    return '<div class="dc-swatch" style="background:'+x(col)+'" title="'+x(col)+'"></div>';
+  }).join('');
+  var uxStrengths = (di.uxStrengths||[]).map(function(s){
+    return '<span class="dc-tag g">'+x(s)+'</span>';
+  }).join('');
+  var designGaps = (di.designGaps||[]).map(function(g){
+    return '<span class="dc-tag a">'+x(g)+'</span>';
+  }).join('');
+  return '<div class="dcard">'
+    +'<div class="dc-hd"><span class="dc-ico">&#9670;</span><span class="dc-title">Designer Intel</span></div>'
+    +'<div class="dc-body">'
+      +(swatches?'<div><div class="dc-lbl">Brand Colors</div><div class="dc-swatches">'+swatches+'</div></div>':'')
+      +(di.designLanguage?'<div><div class="dc-lbl">Design Language</div><p class="dc-text">'+x(di.designLanguage)+'</p></div>':'')
+      +(uxStrengths?'<div><div class="dc-lbl">UX Strengths</div><div class="dc-tags">'+uxStrengths+'</div></div>':'')
+      +(designGaps?'<div><div class="dc-lbl">Design Gaps</div><div class="dc-tags">'+designGaps+'</div></div>':'')
+      +(di.watchPattern?'<div><div class="dc-lbl">Watch Pattern</div><div class="dc-watch">'+x(di.watchPattern)+'</div></div>':'')
+    +'</div>'
+  +'</div>';
+}
+
+/* === Deep Dives === */
+function buildDeepDives(competitors) {
+  return competitors.map(function(c){
+    var col=CM[c.id]||'#888';
+    var tc=c.threat==='high'?'th':c.threat==='medium'?'tm':'tl';
+    var tl=c.threat==='high'?'High threat':c.threat==='medium'?'Medium threat':'Low threat';
+    var uid='dd-'+c.id;
+
+    function swItems(items,cls,pfx){
+      return (items||[]).map(function(item,i){
+        var t=typeof item==='object'?item.title:item;
+        var d=typeof item==='object'?(item.detail||''):'';
+        var src=typeof item==='object'?(item.source||''):'';
+        var eid=pfx+'-'+c.id+'-'+i;
+        var det=d?(x(d)+(src?'<div class="src"><b>Source:</b> '+x(src)+'</div>':'')):'';
+        return '<li class="swi '+cls+'" id="'+eid+'">'
+          +'<button class="swtog" onclick="tog(\''+eid+'\')">'
+            +'<span class="swdot"></span><span class="swtit">'+x(t)+'</span>'
+            +(d?'<span class="swchv"></span>':'')
+          +'</button>'+(det?'<div class="swdet">'+det+'</div>':'')
+        +'</li>';
+      }).join('');
+    }
+
+    function rmItems(arr,pfx){
+      if(!arr||!arr.length)return '';
+      return arr.map(function(item,i){
+        var uid2='rm-'+c.id+'-'+pfx+'-'+i;
+        var tg=item.tag||'planned';
+        var tgcls=tg==='shipped'?'ts':tg==='soon'?'tc':tg==='planned'?'tp':tg==='rumoured'?'tr':'ta';
+        var tglbl=tg==='shipped'?'Shipped':tg==='soon'?'Coming soon':tg==='planned'?'Planned':tg==='rumoured'?'Rumoured':'AI';
+        var rdet=item.detail?(x(item.detail)+(item.source?'<div class="src"><b>Source:</b> '+x(item.source)+'</div>':'')):'';
+        return '<li class="rmi'+(tg==='ai'?' ai':'')+'" id="'+uid2+'">'
+          +'<button class="rmtog" onclick="tog(\''+uid2+'\')">'
+            +'<span class="rmtag '+tgcls+'">'+tglbl+'</span>'
+            +'<span class="rmtit">'+x(item.title)+'</span>'
+            +(item.detail?'<span class="rmchv"></span>':'')
+          +'</button>'+(rdet?'<div class="rmdet">'+rdet+'</div>':'')
+        +'</li>';
+      }).join('');
+    }
+
+
+    var rm=c.roadmap||{};
+    var body='<div class="dd-inner">'
+      +'<div class="g2" style="margin-bottom:16px">'
+        +'<div>'
+          +'<div class="sublbl">Strengths</div>'
+          +'<ul class="swlist">'+swItems(c.strengths,'g','s')+'</ul>'
+        +'</div>'
+        +'<div>'
+          +'<div class="sublbl">Weaknesses</div>'
+          +'<ul class="swlist">'+swItems(c.weaknesses,'r','w')+'</ul>'
+        +'</div>'
+      +'</div>'
+      +'<div class="g2">'
+        +'<div class="rmcard">'
+          +'<div class="rmhd"><div class="rmdot" style="background:'+col+'"></div><span class="rmname">Roadmap &amp; AI Features</span></div>'
+          +'<div class="rmbody">'
+            +'<p class="rmsec"><span class="rmico ig">&#10003;</span><span style="color:#15803d">Recent releases</span></p>'
+            +'<ul class="rmlist">'+rmItems(rm.recentReleases,'rel')+'</ul>'
+            +'<p class="rmsec"><span class="rmico ib">&#8594;</span><span style="color:#1d4ed8">On the roadmap</span></p>'
+            +'<ul class="rmlist">'+rmItems(rm.upcomingItems,'up')+'</ul>'
+            +'<p class="rmsec"><span class="rmico ip">AI</span><span style="color:#7e22ce">AI features</span></p>'
+            +'<ul class="rmlist">'+rmItems(rm.aiFeatures,'ai')+'</ul>'
+          +'</div>'
+        +'</div>'
+        +'<div style="display:flex;flex-direction:column;gap:12px">'
+          +'<div class="bcard" style="border-top:3px solid '+col+'">'
+            +'<p class="bvs">TAP vs '+x(c.name)+'</p>'
+            +'<p class="bbody">'+x(c.tapAngle)+'</p>'
+          +'</div>'
+          +'<div class="wcard">'
+            +'<div class="whd"><div class="wdot" style="background:'+col+'"></div><span class="wname">Watch Signal</span></div>'
+            +'<p class="wbody">'+x(c.watchSignal)+'</p>'
+          +'</div>'
+          +buildDesignerCard(c)
+        +'</div>'
+      +'</div>'
+    +'</div>';
+
+    return '<div class="dd-comp" id="'+uid+'">'
+      +'<button class="dd-tog" onclick="document.getElementById(\''+uid+'\').classList.toggle(\'open\')">'
+        +'<div class="dd-dot" style="background:'+col+'"></div>'
+        +'<div class="dd-meta">'
+          +'<div class="dd-name">'+x(c.name)+'</div>'
+          +'<div class="dd-tag">'+x(c.tagline)+'&nbsp;&nbsp;<span class="tc-badge '+tc+'" style="font-size:9.5px;padding:1px 8px">'+tl+'</span></div>'
+        +'</div>'
+        +'<div class="dd-chv">+</div>'
+      +'</button>'
+      +'<div class="dd-body">'+body+'</div>'
+    +'</div>';
+  }).join('');
+}
+
+/* === Render All === */
+function renderAll(d) {
+  document.getElementById('sw-text').textContent=d.soWhat||'No strategic insight available — check back Monday.';
+  document.getElementById('ticker-track').innerHTML=buildTicker(d.winLoss);
+  document.getElementById('alerts-row').innerHTML=buildAlerts(d.alerts);
+  document.getElementById('threat-row').innerHTML=buildThreatRow(d.competitors);
+  document.getElementById('radar-chart').innerHTML=buildRadar(d.competitors);
+  document.getElementById('score-table').innerHTML=buildScoreTable(d.competitors);
+  document.getElementById('ws-items').innerHTML=buildWhiteSpace(d.competitors);
+  var legendHtml='<div class="rl-item"><div class="rl-swatch" style="background:#1a56db"></div>TAP</div>'
+    +d.competitors.map(function(c){
+      return '<div class="rl-item"><div class="rl-swatch" style="background:'+(CM[c.id]||'#888')+'"></div>'+x(c.name)+'</div>';
+    }).join('');
+  document.getElementById('radar-legend').innerHTML=legendHtml;
+  document.getElementById('kill-grid').innerHTML=buildKillGrid(d.competitors);
+  document.getElementById('dd-list').innerHTML=buildDeepDives(d.competitors);
+}
+
+/* === Skeleton === */
+function renderSkeleton() {
+  document.getElementById('sw-text').innerHTML='<span class="sk" style="height:14px;width:380px;display:inline-block;vertical-align:middle"></span>';
+  document.getElementById('alerts-row').innerHTML=[1,2,3].map(function(){
+    return '<div class="alert-card info" style="border-left-color:var(--bdl)"><div class="alert-hd"><span class="sk" style="height:12px;width:56px;flex-shrink:0"></span><span class="sk" style="height:14px;width:180px"></span></div><div class="alert-body"><span class="sk" style="height:12px;width:100%;margin-bottom:6px"></span><span class="sk" style="height:12px;width:80%"></span></div></div>';
+  }).join('');
+  document.getElementById('threat-row').innerHTML=[1,2,3].map(function(){
+    return '<div class="threat-card"><span class="sk" style="height:10px;width:10px;border-radius:50%;flex-shrink:0"></span><div style="flex:1"><span class="sk" style="height:14px;width:80px;margin-bottom:6px"></span><span class="sk" style="height:12px;width:60px"></span></div></div>';
+  }).join('');
+}
+
+/* === Default Data === */
+function getDefaultData() {
+  return {
+    generatedAt:"2026-04-14T07:00:00Z",
+    soWhat:"ServiceNow's Autonomous Workforce launch directly undercuts our speed-to-value narrative — every AE needs the new TCO calculator in calls this week.",
+    alerts:[
+      {severity:"critical",headline:"ServiceNow Autonomous Workforce Goes Live",impact:"Directly threatens TAP's 'deploy in weeks' core differentiator.",detail:"ServiceNow launched AI agents that execute enterprise tasks end-to-end in early 2026. Their marketing now leads with fast deployment — until now our strongest differentiator. Three AEs have already reported this objection in Q1 2026 evaluations.",action:"Use the 3-year TCO calculator in every ServiceNow evaluation. $5M+ vs under $200K is the unanswerable argument."},
+      {severity:"warning",headline:"Tonkean Acquires Cinch, Eyes EMEA",impact:"New competitive pressure in European markets where TAP currently leads.",detail:"Tonkean's January 2026 Cinch acquisition gave them invoice intelligence AI and a foothold for EMEA expansion with offices planned in UK, Germany, and France. Their FinanceWorks product overlaps with TAP's finance workflow positioning.",action:"Flag all EMEA pipeline. Brief the EMEA team — the $10K/month pricing floor argument still holds, but the brand gap is closing fast."},
+      {severity:"info",headline:"Checkbox Gartner Recognition Accelerating Shortlisting",impact:"Rising shortlisting frequency in legal-heavy verticals.",detail:"Checkbox's 2025 Gartner Hype Cycle recognition is appearing in RFP shortlists at law firms and financial services legal departments. No new feature threat — the risk is third-party validation perception in procurement.",action:"Lead with the cross-department scope question immediately: 'What happens when HR needs this automation next quarter?'"}
+    ],
+    winLoss:[
+      {outcome:"win",competitor:"servicenow",context:"Mid-market logistics firm, 280 seats",reason:"$380K TCO savings over 3 years and 6-week vs 9-month deployment timeline"},
+      {outcome:"win",competitor:"checkbox",context:"Professional services firm, cross-dept rollout",reason:"Legal + HR + procurement coverage vs Checkbox's legal-only scope"},
+      {outcome:"loss",competitor:"checkbox",context:"Legal tech startup, 55 seats",reason:"Checkbox's legal-specific templates and Gartner recognition were decisive"},
+      {outcome:"win",competitor:"tonkean",context:"Retail ops team, 150 seats",reason:"$10K/month floor ruled Tonkean out — TAP won on price and deployment speed"},
+      {outcome:"loss",competitor:"servicenow",context:"Fortune 500 manufacturer",reason:"Existing ServiceNow ITSM contract and exec-level relationship blocked fair evaluation"}
+    ],
+    competitors:[
+      {
+        id:'checkbox',name:'Checkbox',tagline:'Legal-focused intake & workflow',threat:'medium',threatDelta:'up',
+        pillars:['No-code','Legal ops','AI intake'],
+        silverBullet:"Ask: 'When HR needs the same automation next quarter, does Checkbox cover it — or do you buy another tool?'",
+        landmineQuestions:[
+          "How do you handle workflow automation outside the legal team — HR, procurement, finance?",
+          "What does your reporting story look like at 12 months — can you export to Tableau or Power BI today?",
+          "Who maintains Checkbox when the legal ops manager moves on — does it require IT support?"
+        ],
+        counterNarratives:[
+          {claim:"Checkbox is purpose-built for legal, so it fits us better.",rebuttal:"Purpose-built means purpose-limited. You'll buy a second tool for HR, a third for finance. TAP covers all three from day one at no extra cost."},
+          {claim:"Gartner recognized Checkbox in 2025.",rebuttal:"Gartner placed them in two legal-specific niches. TAP competes across the full workflow automation market — not a single department."},
+          {claim:"Checkbox requires no IT involvement.",rebuttal:"Neither does TAP — and TAP also handles IT, HR, procurement, and finance workflows without requiring a separate purchase for each department."}
+        ],
+        strengths:[
+          {title:'Truly no-code, zero IT dependency',detail:'Checkbox allows legal teams to build and maintain workflows without engineering support. Business users can go from idea to live automation in hours — critical where IT backlogs delay projects by months.',source:'Checkbox product site (checkbox.ai/product), G2 reviews 2024–2025'},
+          {title:'AI-powered intake triage',detail:'The platform uses generative AI to classify incoming requests from email, Slack, and Teams, routing them to the right lawyer based on matter type, urgency, and capacity.',source:'Checkbox AI Intake feature page; Legal Tech Hub analyst report Q1 2025'},
+          {title:'Gartner Hype Cycle recognition 2025',detail:'Checkbox was named a Sample Vendor in Gartner\'s 2025 Hype Cycle for Legal Tech in two categories: Legal Department Intake & Triage, and Legal Chatbots.',source:'Gartner Hype Cycle for Legal Technology, 2025 (published July 2025)'},
+          {title:'Strong blue-chip client base',detail:'Trusted by Pepsi, SAP, Elastic, BMW, Xero, Allianz, and Coca-Cola Europacific Partners — providing powerful social proof in large legal department sales cycles.',source:'Checkbox customer page (checkbox.ai/customers); press releases 2024–2025'}
+        ],
+        weaknesses:[
+          {title:'Narrowly scoped to legal ops only',detail:'Checkbox is purpose-built for in-house legal teams and does not serve HR, procurement, finance, or other functions. Companies with cross-department automation needs must buy additional tools.',source:'G2 reviews (g2.com/products/checkbox); Capterra user reviews 2024'},
+          {title:'Analytics and reporting are basic',detail:'Multiple user reviews cite limited reporting customization. Legal teams needing deep performance dashboards or executive KPI reports often find the out-of-the-box analytics insufficient.',source:'G2 reviews — "Reporting & Analytics" category ratings; Capterra verified reviews 2024–2025'},
+          {title:'Performance lag on complex forms',detail:'Users report noticeable slowdowns when running forms with high complexity — many conditional branches or large datasets.',source:'G2 verified user reviews (2024); Reddit r/legaltech community feedback'}
+        ],
+        tapAngle:'TAP covers the full breadth of business workflow automation — not just legal — giving organizations a single platform for HR, procurement, legal, and finance. Where Checkbox requires buying additional tools, TAP provides cross-functional automation with stronger analytics and no vertical ceiling.',
+        watchSignal:'Checkbox\'s Gartner recognition in 2025 is accelerating enterprise sales cycles in legal tech. Watch for expansion into compliance and risk management verticals, which would bring broader competition with TAP.',
+        roadmap:{
+          recentReleases:[
+            {title:'AI Legal Chatbot (GA)',tag:'shipped',detail:'Checkbox launched its AI-powered legal chatbot in 2025, enabling business users to get instant answers using company policies and playbooks as a knowledge base.',source:'Checkbox product announcement blog (2025)'},
+            {title:'Unified Service Hub',tag:'shipped',detail:'Checkbox consolidated intake, matter management, and workflow automation into a single platform replacing separate ticketing and matter-tracking tools.',source:'Checkbox release notes & changelog (checkbox.ai/updates, 2025)'}
+          ],
+          upcomingItems:[
+            {title:'Expanded compliance & risk workflows',tag:'soon',detail:'Based on customer demand and Gartner positioning, Checkbox is building workflow templates for compliance teams beyond legal ops.',source:'Checkbox roadmap webinar (Q4 2024); Gartner analyst commentary 2025'},
+            {title:'Enhanced analytics & BI dashboards',tag:'planned',detail:'Plans include granular reporting with cycle time breakdowns, workload heatmaps, and executive dashboards with Tableau/Power BI export.',source:'G2 user reviews citing analytics gap; Checkbox support forum feedback 2024'},
+            {title:'HR & Finance function templates',tag:'rumoured',detail:'Signals suggest expansion into HR onboarding and finance approval workflows, which would directly increase overlap with TAP.',source:'Industry analyst speculation; LinkedIn posts from Checkbox product team (2025)'}
+          ],
+          aiFeatures:[
+            {title:'NLP intake triage and auto-routing',tag:'ai',detail:'Uses NLP to automatically categorize and route requests from email, Slack, and Teams — reducing triage time from hours to seconds.',source:'Checkbox AI feature documentation (checkbox.ai/ai)'},
+            {title:'Generative AI document drafting',tag:'ai',detail:'Generates first-draft legal documents such as NDAs, approval letters, and policy responses using AI, pre-filled from intake form data.',source:'Checkbox customer case studies — SAP & BMW (2025)'},
+            {title:'AI-suggested workflow optimizations',tag:'ai',detail:'Planned AI that analyses workflow performance and proactively suggests improvements — identifying bottlenecks and SLA breaches.',source:'Checkbox product roadmap session (Legal Tech Summit 2025)'}
+          ]
+        },
+        scores:{easeOfUse:9,aiCapability:7,breadth:4,enterpriseScale:6,timeToValue:9,priceCompetitiveness:7},
+        designerIntel:{
+          brandColors:['#00a67e','#1a1a2e','#f5f5f0','#e8f5f1'],
+          designLanguage:'Clean, form-first aesthetic built around legal intake. Heavy white space with a mint-green accent system. Minimal chrome — the UI steps back and lets workflows take centre stage. Mobile-responsive but desktop-optimised.',
+          uxStrengths:['Best-in-class form builder UX','Clear step-by-step intake flows','Consistent empty states & onboarding','Fast load, minimal UI weight'],
+          designGaps:['No dark mode or theme options','Weak data visualisation & charts','Dashboard customisation very limited','Small screen layouts feel cramped'],
+          watchPattern:'Their Unified Service Hub consolidation is restructuring the IA — watch how they handle navigation as more modules merge into one surface. Could expose UX debt quickly.'
+        }
+      },
+      {
+        id:'servicenow',name:'ServiceNow',tagline:'Enterprise-wide platform giant',threat:'high',threatDelta:'up',
+        pillars:['Enterprise','Agentic AI','ITSM'],
+        silverBullet:"Ask: 'What's your budget for the 6–18 month ServiceNow implementation — and what's the total 3-year cost including admin staff and partner fees?'",
+        landmineQuestions:[
+          "What implementation partner are you using, and what's their timeline and cost estimate to go-live?",
+          "How many dedicated ServiceNow admins will you need to maintain the instance after launch?",
+          "What's the all-in licensing cost per user today — and at 2× headcount in 2 years?"
+        ],
+        counterNarratives:[
+          {claim:"ServiceNow is the enterprise standard — it's the safe choice.",rebuttal:"Safe to buy, expensive to operate. The 'safe' choice averages $5M over 3 years and 12 months before your first workflow goes live. TAP delivers the same automation in 6 weeks."},
+          {claim:"ServiceNow's Autonomous Workforce means they can deploy faster now.",rebuttal:"'Faster' for ServiceNow still means 6+ months. Autonomous Workforce requires the same admin overhead and partner ecosystem. Ask them for a reference customer who went live in under 90 days."},
+          {claim:"We already use ServiceNow ITSM so expanding makes sense.",rebuttal:"ITSM and workflow modules are separate purchases at $100–$400/user/month each. Existing customers still pay full price for expansion modules. Run the 3-year TCO comparison first."}
+        ],
+        strengths:[
+          {title:'Cross-department automation at scale',detail:'ServiceNow\'s Now Platform spans IT, HR, legal, customer service, finance, and security in a single governed environment.',source:'ServiceNow Now Platform overview; Forrester Wave: Digital Process Automation 2024'},
+          {title:'Agentic AI via Moveworks acquisition',detail:'ServiceNow acquired Moveworks in 2025. In early 2026 they launched Autonomous Workforce — AI agents that execute enterprise tasks end-to-end with built-in governance.',source:'ServiceNow press release — Moveworks acquisition (2025); Knowledge 2026 keynote'},
+          {title:'Massive partner and implementation ecosystem',detail:'Deep partnerships with Deloitte, KPMG, Accenture, and IBM, each with thousands of certified consultants and pre-built industry templates.',source:'ServiceNow Partner Program directory; IDC MarketScape 2024'},
+          {title:'Dominant market position and brand trust',detail:'ServiceNow holds leadership in ITSM with over $10B in annual revenue. Brand is synonymous with enterprise automation in procurement decisions.',source:'ServiceNow Q4 2024 earnings report; Gartner Magic Quadrant for ITSM 2024 (Leader)'}
+        ],
+        weaknesses:[
+          {title:'Extremely high cost of ownership',detail:'Pricing from $100–$400/user/month, before implementation costs of $500K–$2M. Total 3-year cost routinely exceeds $5M.',source:'G2 pricing reviews; Gartner Peer Insights cost ratings 2024'},
+          {title:'Months-long implementation timeline',detail:'Typical deployment: 6–18 months from contract to go-live. Fast automation needs consistently cite this as the primary reason organizations evaluate alternatives.',source:'Gartner Peer Insights implementation reviews 2024; TrustRadius ServiceNow reviews'},
+          {title:'Requires dedicated internal expertise',detail:'Maintaining a ServiceNow instance demands a dedicated admin team, certified training, and significant IT involvement.',source:'ServiceNow Community forums; G2 reviews citing admin overhead (2024–2025)'}
+        ],
+        tapAngle:'TAP delivers comparable workflow automation in weeks rather than months, at a fraction of ServiceNow\'s total cost, without requiring a dedicated admin team or large implementation budget. For mid-market and focused enterprise teams: 80% of the capability at 20% of the cost.',
+        watchSignal:'ServiceNow\'s Autonomous Workforce launch in early 2026 is a significant escalation in the agentic AI race. If they succeed in simplifying onboarding and reducing implementation friction, it could erode TAP\'s speed and cost advantages.',
+        roadmap:{
+          recentReleases:[
+            {title:'Autonomous Workforce (early 2026)',tag:'shipped',detail:'ServiceNow launched AI specialists that execute enterprise tasks end-to-end with built-in governance — resolving IT incidents, processing HR requests, handling procurement approvals.',source:'ServiceNow Knowledge 2026 keynote; press release Jan 2026'},
+            {title:'Yokohama release — Integration Hub upgrades',tag:'shipped',detail:'March 2025 release enhanced Integration Hub with Stream Connect alerting, improved error handling, and new REST API trigger capabilities.',source:'ServiceNow Yokohama release notes (March 2025)'}
+          ],
+          upcomingItems:[
+            {title:'Now Assist AI expansion across all modules',tag:'soon',detail:'Rolling out Now Assist generative AI across IT, HR, customer service, and security with AI-summarized incidents and suggested resolutions.',source:'ServiceNow Now Assist product page; Q1 2025 earnings call'},
+            {title:'Mid-market simplified deployment packages',tag:'planned',detail:'Under competitive pressure, ServiceNow signalled streamlined starter packages for 500–5,000 employee organizations — a direct threat to TAP\'s core mid-market positioning.',source:'ServiceNow partner briefing materials Q4 2024; Forrester analyst commentary 2025'},
+            {title:'Expanded industry cloud solutions',tag:'planned',detail:'Pre-configured industry cloud packages for financial services, healthcare, and government to reduce implementation time.',source:'ServiceNow Industry Solutions page; partner summit 2025 slides'}
+          ],
+          aiFeatures:[
+            {title:'Moveworks conversational AI + enterprise search',tag:'ai',detail:'Conversational AI resolving employee requests across IT, HR, and finance through natural language in Slack, Teams, or web. Over 1 billion employee interactions processed pre-acquisition.',source:'ServiceNow acquisition announcement (2025); Moveworks impact report 2024'},
+            {title:'Predictive Intelligence for incident routing',tag:'ai',detail:'ML automatically categorizes, routes, and prioritizes IT incidents based on historical resolution patterns — reducing manual triage by up to 80%.',source:'ServiceNow Predictive Intelligence docs; ROI study 2024'},
+            {title:'Now Assist for Creators — AI workflow builder',tag:'ai',detail:'Developers describe a workflow in plain language and AI generates Flow Designer steps, forms, and business rules automatically.',source:'ServiceNow Now Assist for Creators feature page; Knowledge 2025 demo'}
+          ]
+        },
+        scores:{easeOfUse:5,aiCapability:9,breadth:10,enterpriseScale:10,timeToValue:2,priceCompetitiveness:2},
+        designerIntel:{
+          brandColors:['#81b5a1','#293e40','#00a1e0','#f0f4f8'],
+          designLanguage:'Enterprise-dense UI system. "Next Experience" refresh (2022–ongoing) is moving legacy ServiceNow toward a cleaner, card-based layout — but legacy modules still coexist, creating a split personality. Heavy reliance on configurable workspaces and role-based views.',
+          uxStrengths:['Mature, documented design system (UI Builder)','Highly configurable workspace layouts','Role-based UI adapts to user context','Strong accessibility compliance (508/WCAG)'],
+          designGaps:['Steep learning curve for new users','Overwhelming information density by default','Inconsistent legacy vs Next Experience UI','Customisation requires developer involvement'],
+          watchPattern:'"Next Experience" UI rollout is actively replacing legacy interfaces module by module — track which modules get the redesign treatment and how they handle the transition for existing power users.'
+        }
+      },
+      {
+        id:'tonkean',name:'Tonkean',tagline:'Orchestration layer for complex ops',threat:'low',threatDelta:'stable',
+        pillars:['Orchestration','Procurement','F500'],
+        silverBullet:"Tonkean starts at $10,000/month minimum. Ask: 'Is your automation budget over $120K per year before you've deployed a single workflow?'",
+        landmineQuestions:[
+          "What's the minimum contract value — are you comfortable committing $10,000/month as your entry price?",
+          "How many Tonkean customers are in your region — is there local support and compliance coverage?",
+          "Are you at F500 scale — or would you be paying for orchestration complexity you'll never actually use?"
+        ],
+        counterNarratives:[
+          {claim:"Tonkean is best for complex procurement orchestration.",rebuttal:"Tonkean is excellent for F500 procurement at $10K/month+. If you're not at that scale, you're overpaying for capabilities you won't use. TAP handles complex workflows at a price point that fits."},
+          {claim:"Tonkean integrates with everything without rip-and-replace.",rebuttal:"So does TAP — 200+ integrations, wraps existing tools. The difference: TAP doesn't require a $10K/month entry price to access those integrations."},
+          {claim:"Tonkean has Fortune 500 customers including Google.",rebuttal:"47 global enterprise customers is impressive but narrow — this is a premium product for the very largest organizations. TAP has broader deployment with faster time-to-value for the other 99% of the market."}
+        ],
+        strengths:[
+          {title:'Patented state engine for complex flows',detail:'Tonkean\'s patented state engine supports asynchronous, multi-system workflows where timing and sequence are unknown — valuable for procurement spanning months.',source:'Tonkean US patent filings (USPTO); Tonkean platform whitepaper'},
+          {title:'250+ integrations, no rip-and-replace',detail:'Wraps around existing tools including Coupa, SAP, Salesforce, CLM platforms, and ERPs without requiring stack replacement.',source:'Tonkean integrations directory; G2 integration ratings 2024'},
+          {title:'ProcurementGPT and agentic AI agents',detail:'ProcurementGPT auto-generates RFPs, compares vendor options, and creates purchase orders. Companies report 50% reduction in cycle times and 30+ hours/week of manual effort eliminated.',source:'Tonkean ProcurementGPT launch blog (2024); customer ROI case studies'},
+          {title:'Strong F500 enterprise footprint',detail:'Counts major Fortune 500 companies among its clients, with endorsements from former Google Legal Operations leaders and deployments at Instacart.',source:'Tonkean customer page; LinkedIn testimonials from Google Legal Ops alumni 2024'}
+        ],
+        weaknesses:[
+          {title:'Tiny market share, limited brand awareness',detail:'Tonkean holds just 0.12% market share with approximately 47 enterprise customers globally. Outside procurement circles the brand is largely unknown.',source:'Datanyze market share data (2025); G2 category presence vs competitors'},
+          {title:'$10,000 per month minimum price floor',detail:'The $10,000/month entry price makes Tonkean completely inaccessible to small and mid-sized businesses — a natural opening for TAP in the $1K–$8K/month range.',source:'Tonkean pricing page; G2 & Vendr pricing intelligence reports 2024'},
+          {title:'Heavily US-centric customer base',detail:'Nearly 79% of customers are in the United States. The Cinch acquisition in 2026 is their first serious EMEA push.',source:'Datanyze customer geography data (2025); Tonkean LinkedIn company page'}
+        ],
+        tapAngle:'TAP wins on accessibility and mid-market fit — delivering powerful workflow automation without Tonkean\'s complexity, $10K/month price floor, or F500-only positioning. Faster deployment and broader geographic support for organizations that don\'t need cross-ERP orchestration at massive scale.',
+        watchSignal:'Tonkean\'s Cinch acquisition in 2026 signals an aggressive push into invoice intelligence and European markets. FinanceWorks will bring direct competition in markets where TAP currently has a clear advantage.',
+        roadmap:{
+          recentReleases:[
+            {title:'Cinch acquisition — FinanceWorks launch',tag:'shipped',detail:'Tonkean acquired Cinch in early 2026, adding real-time invoice triage, multi-way matching, and vendor spend analytics as the FinanceWorks product line.',source:'Tonkean press release — Cinch acquisition (Jan 2026); FinanceWorks product page'},
+            {title:'Proactive Procurement AI Agents',tag:'shipped',detail:'No-code AI agent builder allowing procurement teams to deploy autonomous agents using drag-and-drop and plain-language instructions.',source:'Tonkean product blog — AI Agents launch (2025)'}
+          ],
+          upcomingItems:[
+            {title:'FinanceWorks EMEA market expansion',tag:'soon',detail:'Expanding European presence with new offices in Germany, UK, and France — Tonkean\'s first serious EMEA go-to-market push.',source:'Tonkean LinkedIn job postings — EMEA roles (2026)'},
+            {title:'LegalWorks product line',tag:'planned',detail:'Based on existing legal ops use cases and Google Legal Ops endorsements, a dedicated LegalWorks product is the logical next step after FinanceWorks.',source:'Tonkean CEO interview (The Procurement Magazine, Q1 2025)'},
+            {title:'Cross-ERP real-time spend intelligence',tag:'planned',detail:'Real-time spend intelligence layer aggregating data across multiple ERPs and P2P platforms — giving CFOs a unified spend view without replacing existing systems.',source:'Tonkean CFO summit presentation (2025)'}
+          ],
+          aiFeatures:[
+            {title:'ProcurementGPT — generative procurement AI',tag:'ai',detail:'Interprets plain-language purchase requests, classifies against policy rules, auto-generates RFPs, and creates compliant POs. 50% cycle time reduction reported.',source:'Tonkean ProcurementGPT launch (2024); Instacart case study'},
+            {title:'Proactive AI agents with pre-emptive action',tag:'ai',detail:'Unlike reactive chatbots, Tonkean\'s AI agents monitor systems continuously and act before being asked — flagging contract renewals and catching budget overruns.',source:'Tonkean AI Agents whitepaper; Gartner Hype Cycle for Procurement Technology 2025'},
+            {title:'AI invoice triage and multi-way matching',tag:'ai',detail:'Real-time AI detecting discrepancies across invoices, POs, and contracts using multi-way matching — integrated into core Tonkean platform via FinanceWorks.',source:'Cinch product documentation (pre-acquisition); Tonkean FinanceWorks integration roadmap (2026)'}
+          ]
+        },
+        scores:{easeOfUse:6,aiCapability:8,breadth:6,enterpriseScale:8,timeToValue:5,priceCompetitiveness:3},
+        designerIntel:{
+          brandColors:['#6b3fa0','#1a1a2e','#f0edff','#e9d5ff'],
+          designLanguage:'Modern SaaS aesthetic anchored by a purple brand identity. Canvas-based workflow builder with drag-and-drop interactions. UI is deliberately sparse — reflects a small design team. Post-Cinch acquisition is introducing a second design language that hasn\'t yet been harmonised.',
+          uxStrengths:['Clean drag-and-drop process canvas','Good progressive disclosure in complex flows','Clear empty states and first-run experience','Minimal UI chrome reduces cognitive load'],
+          designGaps:['Limited end-user interface customisation','Sparse reporting and analytics UI','Post-acquisition design inconsistency (Cinch vs core)','Small design team = slower iteration cycles'],
+          watchPattern:'Watch how Tonkean merges Cinch\'s design language into the core product — two distinct visual systems are currently in play. Acquisition integrations often create UX fragmentation that takes 12–18 months to resolve.'
+        }
+      }
+    ]
+  };
+}
+
+/* === Auth Gate === */
+(function(){
+  var PASS='Kx9#mP2$vL8@nQ4!';
+  var KEY='aries_authenticated';
+  var overlay=document.getElementById('auth-overlay');
+  var form=document.getElementById('auth-form');
+  var input=document.getElementById('auth-password');
+  var btn=document.getElementById('auth-submit');
+  var errMsg=document.getElementById('auth-error-msg');
+
+  function showApp(){
+    overlay.classList.add('hidden');
+  }
+  function showError(msg){
+    input.classList.add('error');
+    errMsg.textContent=msg;
+    input.value='';
+    setTimeout(function(){input.focus();},0);
+  }
+  function clearError(){
+    input.classList.remove('error');
+    errMsg.textContent='';
+  }
+
+  // Check if already authenticated
+  if(sessionStorage.getItem(KEY)==='true'){
+    showApp();
+  } else {
+    overlay.classList.remove('hidden');
+    setTimeout(function(){input.focus();},100);
+  }
+
+  // Input clears error on type
+  input.addEventListener('input',function(){
+    if(input.classList.contains('error'))clearError();
+  });
+
+  // Form submission
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var val=input.value;
+    if(!val){showError('Please enter a password.');return;}
+    // Verifying state
+    btn.disabled=true;
+    btn.textContent='Verifying...';
+    clearError();
+    setTimeout(function(){
+      if(val===PASS){
+        sessionStorage.setItem(KEY,'true');
+        showApp();
+      } else {
+        btn.disabled=false;
+        btn.textContent='Continue with Password';
+        showError('Incorrect password. Please try again.');
+      }
+    },300);
+  });
+})();
+
+/* === Init === */
+window.onload=function(){
+  renderSkeleton();
+  fetch('/api/intel')
+    .then(function(r){
+      if(r.status===404)throw new Error('not_ready');
+      if(!r.ok)throw new Error('status_'+r.status);
+      return r.json();
+    })
+    .then(function(data){
+      if(data.error)throw new Error('not_ready');
+      renderAll(data);
+      var d=new Date(data.generatedAt);
+      document.getElementById('lu').textContent='Updated '+d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    })
+    .catch(function(err){
+      if(err.message==='not_ready'){
+        document.getElementById('lu').textContent='First refresh runs Monday 7am UTC';
+      } else {
+        document.getElementById('lu').textContent='Could not load — showing default intel';
+      }
+      renderAll(getDefaultData());
+    });
+};
+</script>
+</body>
+</html>
