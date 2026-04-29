@@ -45,7 +45,7 @@
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px}
 
 /* Header */
-header{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 32px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;height:56px}
+header{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 28px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;height:62px}
 .logo{display:flex;align-items:center}.logo img{height:28px}
 .hdr-r{display:flex;align-items:center;gap:12px}
 #lu{font-size:12px;color:var(--ink3)}
@@ -53,7 +53,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 32px;pos
 
 /* Pulse Bar */
 .pulse-bar{background:#090d18;border-bottom:1px solid #1e2638}
-.sowhat-row{padding:12px 32px;display:flex;align-items:flex-start;gap:14px;border-bottom:1px solid #1e2638;flex-wrap:wrap}
+.sowhat-row{padding:11px 28px;display:flex;align-items:flex-start;gap:14px;border-bottom:1px solid #1e2638;flex-wrap:wrap}
 .sw-label{font-size:9.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:#fbbf24;white-space:nowrap;flex-shrink:0;margin-top:3px}
 .sw-text{font-size:13.5px;color:#f3f4f6;line-height:1.55;font-weight:500}
 .ticker-outer{overflow:hidden;padding:9px 0;position:relative}
@@ -71,7 +71,7 @@ header{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 32px;pos
 .t-reason{color:#c8d3e0;font-size:12.5px;font-style:italic}
 
 /* Layout */
-main{max-width:1160px;margin:0 auto;padding:32px 32px 80px}
+main{max-width:1440px;margin:0 auto;padding:28px 28px 72px}
 .section{margin-top:40px;padding-top:40px;border-top:1px solid var(--bd)}
 .section:first-child{margin-top:0;padding-top:0;border-top:none}
 .sec-hd{display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
@@ -126,15 +126,16 @@ main{max-width:1160px;margin:0 auto;padding:32px 32px 80px}
 .rl-swatch{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
 /* Score Table */
-.score-table{width:100%;border-collapse:collapse}
-.score-table th{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink4);padding:0 6px 10px;text-align:left}
-.score-table th:first-child{padding-left:0;min-width:90px}
-.score-table td{padding:6px;border-top:1px solid var(--bdl);vertical-align:middle}
-.score-table td:first-child{padding-left:0;font-size:12px;font-weight:500;color:var(--ink2)}
-.bar-wrap{display:flex;align-items:center;gap:5px}
-.bar-bg{flex:1;height:5px;background:var(--bdl);border-radius:3px;position:relative;overflow:hidden;min-width:40px}
-.bar-fill{height:5px;border-radius:3px;position:absolute;left:0;top:0}
-.bar-num{font-size:11px;color:var(--ink3);width:14px;text-align:right;flex-shrink:0}
+.panel-body{overflow-x:auto}
+.score-table{border-collapse:collapse;min-width:100%}
+.score-table th{font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ink4);padding:0 4px 8px;text-align:left;white-space:normal;word-break:break-word;max-width:70px;line-height:1.3}
+.score-table th:first-child{padding-left:0;min-width:80px;max-width:80px}
+.score-table td{padding:4px 4px;border-top:1px solid var(--bdl);vertical-align:middle}
+.score-table td:first-child{padding-left:0;font-size:11.5px;font-weight:500;color:var(--ink2);white-space:nowrap}
+.bar-wrap{display:flex;align-items:center;gap:3px;min-width:44px}
+.bar-bg{flex:1;height:4px;background:var(--bdl);border-radius:3px;position:relative;overflow:hidden;min-width:24px}
+.bar-fill{height:4px;border-radius:3px;position:absolute;left:0;top:0}
+.bar-num{font-size:10.5px;color:var(--ink3);width:12px;text-align:right;flex-shrink:0}
 
 /* White Space */
 .ws-box{margin:0 18px 16px;padding:12px 14px;background:linear-gradient(135deg,var(--tapl),#f0fdf4);border-radius:var(--r);border:1px solid #c3d9ff;flex-shrink:0}
@@ -273,6 +274,13 @@ footer{border-top:1px solid var(--bd);padding:18px 32px;text-align:center;font-s
   .alerts-row{grid-template-columns:1fr}
   .g2{grid-template-columns:1fr}
 }
+
+/* === Tab Nav === */
+.tab-nav{background:var(--sf);border-bottom:1px solid var(--bd);padding:0 28px;display:flex;align-items:center;gap:2px}
+.tab-btn{padding:14px 22px 13px;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;font-family:inherit;font-size:13.5px;font-weight:500;color:var(--ink3);display:flex;align-items:center;gap:7px;margin-bottom:-1px;transition:color .15s,border-color .15s;white-space:nowrap}
+.tab-btn:hover{color:var(--ink2)}.tab-btn.active{color:var(--tap);border-bottom-color:var(--tap);font-weight:600}
+.tab-pill{font-size:10px;padding:1px 7px;border-radius:20px;font-weight:600;letter-spacing:.03em}
+.tab-tap .tab-pill{background:var(--tapl);color:var(--tap)}.tab-iz .tab-pill{background:#f0fdf4;color:#166534}
 </style>
 </head>
 <body>
@@ -284,7 +292,7 @@ footer{border-top:1px solid var(--bd);padding:18px 32px;text-align:center;font-s
       <img src="mitratech-logo.svg" alt="Mitratech">
     </div>
     <h1 class="auth-title">This page is private</h1>
-    <p class="auth-subtitle">Enter your password to access the TAP Competitive Intelligence dashboard.</p>
+    <p class="auth-subtitle">Enter your password to access the Mitratech Competitive Intelligence dashboard.</p>
     <form id="auth-form" autocomplete="off" onsubmit="return false">
       <label class="auth-label" for="auth-password">Password</label>
       <input id="auth-password" class="auth-input" type="password" placeholder="Enter password" autocomplete="current-password">
@@ -303,13 +311,29 @@ footer{border-top:1px solid var(--bd);padding:18px 32px;text-align:center;font-s
 </div>
 
 <header>
-  <a class="logo" href="#"><img src="logo.svg" alt="TAP Workflow Automation"></a>
+  <a class="logo" href="#" style="gap:12px;text-decoration:none;align-items:center">
+    <img src="mitratech-logo.svg" alt="Mitratech" style="height:34px;width:auto">
+    <span style="width:1.5px;height:26px;background:var(--bd);display:inline-block;flex-shrink:0"></span>
+    <span style="font-size:15px;font-weight:600;color:var(--ink);letter-spacing:.01em;white-space:nowrap">Competitive Intel</span>
+  </a>
   <div class="hdr-r">
     <span id="lu" style="font-size:12px;color:var(--ink3)">Loading latest intel...</span>
     <span class="live-badge">&#9679; Auto-updates every Monday</span>
   </div>
 </header>
 
+<!-- Tab Nav -->
+<div class="tab-nav">
+  <button class="tab-btn tab-tap active" id="tab-tap" onclick="switchTab('tap')">
+    <img src="tap-icon.png" style="height:20px;width:20px;object-fit:contain;flex-shrink:0"> TAP Workflow Automation <span class="tab-pill">Workflow</span>
+  </button>
+  <button class="tab-btn tab-iz" id="tab-iz" onclick="switchTab('iz')">
+    <img src="iz-icon.png" style="height:20px;width:20px;object-fit:contain;flex-shrink:0"> INSZoom <span class="tab-pill">Immigration</span>
+  </button>
+</div>
+
+<!-- ===== TAP VIEW ===== -->
+<div id="tap-view">
 <div class="pulse-bar">
   <div class="sowhat-row">
     <span class="sw-label">&#9889; This Week</span>
@@ -388,9 +412,79 @@ footer{border-top:1px solid var(--bd);padding:18px 32px;text-align:center;font-s
 </main>
 
 <footer>TAP (ThinkSmart Automation Platform) &middot; Competitive Intelligence &middot; Refreshes weekly via Claude AI</footer>
+</div><!-- /tap-view -->
+
+<!-- ===== INSZOOM VIEW ===== -->
+<div id="iz-view" style="display:none">
+<div class="pulse-bar">
+  <div class="sowhat-row">
+    <span class="sw-label">&#9889; This Week</span>
+    <span class="sw-text" id="iz-sw-text">Loading strategic insight...</span>
+  </div>
+  <div class="ticker-outer">
+    <div class="ticker-track" id="iz-ticker-track"></div>
+  </div>
+</div>
+<main>
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-hd-dot" style="background:var(--hi)"></div>
+      <h2>Critical Alerts</h2>
+    </div>
+    <div class="alerts-row" id="iz-alerts-row"></div>
+    <div class="threat-row" id="iz-threat-row"></div>
+  </div>
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-hd-dot" style="background:var(--tap)"></div>
+      <h2>The Competitive Matrix</h2>
+    </div>
+    <div class="matrix-grid">
+      <div class="panel">
+        <div class="panel-hd">
+          <div class="panel-title">Capability Radar</div>
+          <div class="panel-sub">INSZoom (solid blue) vs competitors — outer = stronger</div>
+        </div>
+        <div class="radar-wrap"><div id="iz-radar-chart"></div></div>
+        <div class="radar-legend" id="iz-radar-legend"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-hd">
+          <div class="panel-title">Score Breakdown</div>
+          <div class="panel-sub">INSZoom vs competitor benchmarks — green = INSZoom leads</div>
+        </div>
+        <div class="panel-body">
+          <table class="score-table" id="iz-score-table"></table>
+        </div>
+        <div class="ws-box">
+          <div class="ws-label">&#9670; INSZoom White Space — Undisputed Wins</div>
+          <div class="ws-items" id="iz-ws-items"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-hd-dot" style="background:#b45309"></div>
+      <h2>Kill Zone</h2>
+      <span class="sec-hd-sub">— Silver bullets, landmine questions &amp; counter-narratives</span>
+    </div>
+    <div class="kill-grid" id="iz-kill-grid"></div>
+  </div>
+  <div class="section">
+    <div class="sec-hd">
+      <div class="sec-hd-dot" style="background:var(--ink4)"></div>
+      <h2>Deep Dives</h2>
+      <span class="sec-hd-sub">— Full profiles, roadmaps &amp; battlecards</span>
+    </div>
+    <div class="dd-list" id="iz-dd-list"></div>
+  </div>
+</main>
+<footer>INSZoom &middot; Immigration Case Management &middot; Competitive Intelligence &middot; Refreshes weekly via Claude AI</footer>
+</div><!-- /iz-view -->
 
 <script>
-/* === Constants === */
+/* === Constants — TAP === */
 var TAP_SCORES = {easeOfUse:8,aiCapability:7,breadth:8,enterpriseScale:7,timeToValue:9,priceCompetitiveness:8};
 var CM = {checkbox:'#0a7c5c',servicenow:'#1a56db',tonkean:'#6b48d4'};
 var AXES = [
@@ -401,30 +495,45 @@ var AXES = [
   {key:'timeToValue',label:'Time to Value'},
   {key:'priceCompetitiveness',label:'Price'}
 ];
+var TAP_CFG = {productScores:TAP_SCORES,colorMap:CM,axes:AXES,productColor:'#1a56db',productName:'TAP'};
+
+/* === Constants — INSZoom === */
+var IZ_SCORES = {easeOfUse:6,aiCapability:5,caseBreadth:9,enterpriseScale:8,portalUX:6,integrations:7};
+var IZ_CM = {envoy:'#0f766e',docketwise:'#2563eb',eimmigration:'#7c3aed',imagility:'#dc2626',deel:'#ea580c',remote:'#0891b2',oyster:'#65a30d'};
+var IZ_AXES = [
+  {key:'easeOfUse',label:'Ease of Use'},
+  {key:'aiCapability',label:'AI Capability'},
+  {key:'caseBreadth',label:'Case Breadth'},
+  {key:'enterpriseScale',label:'Enterprise Scale'},
+  {key:'portalUX',label:'Portal UX'},
+  {key:'integrations',label:'Integrations'}
+];
+var IZ_CFG = {productScores:IZ_SCORES,colorMap:IZ_CM,axes:IZ_AXES,productColor:'#1a56db',productName:'INSZoom'};
 
 /* === Utils === */
 function x(s){if(!s)return '';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function tog(id){var e=document.getElementById(id);if(e)e.classList.toggle('open');}
 
 /* === Radar Chart === */
-function buildRadar(competitors) {
+function buildRadar(competitors, cfg) {
   var VW=400,VH=400,cx=200,cy=200,R=140;
-  var N=AXES.length;
+  var axes=cfg.axes, N=axes.length;
+  var productScores=cfg.productScores, colorMap=cfg.colorMap, productColor=cfg.productColor;
   function ang(i){return (i/N)*2*Math.PI - Math.PI/2;}
   function pt(val,i){var a=ang(i),r=(val/10)*R;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];}
-  function polyPts(scores){return AXES.map(function(ax,i){return pt(scores[ax.key]||0,i);});}
+  function polyPts(scores){return axes.map(function(ax,i){return pt(scores[ax.key]||0,i);});}
   function ptsToPath(pts){return pts.map(function(p,i){return (i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1);}).join(' ')+'Z';}
 
   var s='<svg viewBox="0 0 '+VW+' '+VH+'" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;display:block;margin:0 auto;overflow:visible">';
 
   /* Grid rings */
   [2,4,6,8,10].forEach(function(v){
-    var gs={};AXES.forEach(function(ax){gs[ax.key]=v;});
+    var gs={};axes.forEach(function(ax){gs[ax.key]=v;});
     s+='<path d="'+ptsToPath(polyPts(gs))+'" fill="none" stroke="'+(v===10?'#d1d5db':'#e9e9e4')+'" stroke-width="'+(v===10?1.5:0.8)+'"/>';
   });
 
   /* Axis lines */
-  AXES.forEach(function(ax,i){
+  axes.forEach(function(ax,i){
     var p=pt(10,i);
     s+='<line x1="'+cx+'" y1="'+cy+'" x2="'+p[0].toFixed(1)+'" y2="'+p[1].toFixed(1)+'" stroke="#e9e9e4" stroke-width="1"/>';
   });
@@ -437,20 +546,20 @@ function buildRadar(competitors) {
 
   /* Competitor polygons */
   competitors.forEach(function(c){
-    var col=CM[c.id]||'#888';
+    var col=colorMap[c.id]||'#888';
     var pts=polyPts(c.scores);
     s+='<path d="'+ptsToPath(pts)+'" fill="'+col+'" fill-opacity="0.1" stroke="'+col+'" stroke-width="1.5"/>';
     pts.forEach(function(p){s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3" fill="'+col+'" opacity="0.7"/>';});
   });
 
-  /* TAP polygon — on top */
-  var tapPts=polyPts(TAP_SCORES);
-  s+='<path d="'+ptsToPath(tapPts)+'" fill="#1a56db" fill-opacity="0.18" stroke="#1a56db" stroke-width="2.5"/>';
-  tapPts.forEach(function(p){s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" fill="#1a56db"/>';});
+  /* Product polygon — on top */
+  var prodPts=polyPts(productScores);
+  s+='<path d="'+ptsToPath(prodPts)+'" fill="'+productColor+'" fill-opacity="0.18" stroke="'+productColor+'" stroke-width="2.5"/>';
+  prodPts.forEach(function(p){s+='<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4.5" fill="'+productColor+'"/>';});
 
   /* Axis labels */
   var LR=R+26;
-  AXES.forEach(function(ax,i){
+  axes.forEach(function(ax,i){
     var a=ang(i);
     var lx=cx+LR*Math.cos(a),ly=cy+LR*Math.sin(a);
     var ca=Math.cos(a),sa=Math.sin(a);
@@ -464,17 +573,18 @@ function buildRadar(competitors) {
 }
 
 /* === Score Table === */
-function buildScoreTable(competitors) {
-  var html='<thead><tr><th></th><th style="color:var(--tapd);font-weight:800">TAP</th>';
-  competitors.forEach(function(c){html+='<th style="color:'+(CM[c.id]||'#888')+'">'+x(c.name)+'</th>';});
+function buildScoreTable(competitors, cfg) {
+  var productScores=cfg.productScores, colorMap=cfg.colorMap, axes=cfg.axes, productName=cfg.productName;
+  var html='<thead><tr><th></th><th style="color:var(--tapd);font-weight:800">'+x(productName)+'</th>';
+  competitors.forEach(function(c){html+='<th style="color:'+(colorMap[c.id]||'#888')+'">'+x(c.name)+'</th>';});
   html+='</tr></thead><tbody>';
-  AXES.forEach(function(ax){
-    var tv=TAP_SCORES[ax.key];
+  axes.forEach(function(ax){
+    var tv=productScores[ax.key]||0;
     html+='<tr><td>'+ax.label+'</td>';
     html+='<td style="background:var(--tapl)"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:'+tv*10+'%;background:var(--tap)"></div></div><span class="bar-num" style="color:var(--tapd);font-weight:700">'+tv+'</span></div></td>';
     competitors.forEach(function(c){
       var cv=c.scores[ax.key]||0;
-      var col=CM[c.id]||'#888';
+      var col=colorMap[c.id]||'#888';
       var lead=(tv-cv>=2)?'background:#f0fdf4':'';
       html+='<td style="'+lead+'"><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:'+cv*10+'%;background:'+col+'"></div></div><span class="bar-num">'+cv+'</span></div></td>';
     });
@@ -485,9 +595,10 @@ function buildScoreTable(competitors) {
 }
 
 /* === White Space === */
-function buildWhiteSpace(competitors) {
-  var leaders=AXES.filter(function(ax){
-    var tv=TAP_SCORES[ax.key];
+function buildWhiteSpace(competitors, cfg) {
+  var productScores=cfg.productScores, axes=cfg.axes;
+  var leaders=axes.filter(function(ax){
+    var tv=productScores[ax.key]||0;
     var mx=Math.max.apply(null,competitors.map(function(c){return c.scores[ax.key]||0;}));
     return tv>=mx;
   });
@@ -522,9 +633,10 @@ function buildAlerts(alerts) {
 }
 
 /* === Threat Delta === */
-function buildThreatRow(competitors) {
+function buildThreatRow(competitors, cfg) {
+  var colorMap=cfg?cfg.colorMap:CM;
   return competitors.map(function(c){
-    var col=CM[c.id]||'#888';
+    var col=colorMap[c.id]||'#888';
     var tc=c.threat==='high'?'th':c.threat==='medium'?'tm':'tl';
     var tl=c.threat==='high'?'High threat':c.threat==='medium'?'Medium threat':'Low threat';
     var delta=c.threatDelta||'stable';
@@ -540,9 +652,10 @@ function buildThreatRow(competitors) {
 }
 
 /* === Kill Zone === */
-function buildKillGrid(competitors) {
+function buildKillGrid(competitors, cfg) {
+  var colorMap=cfg?cfg.colorMap:CM;
   return competitors.map(function(c){
-    var col=CM[c.id]||'#888';
+    var col=colorMap[c.id]||'#888';
     var lmHtml=(c.landmineQuestions||[]).map(function(q){
       return '<li class="lm-q">'+x(q)+'</li>';
     }).join('');
@@ -593,9 +706,10 @@ function buildDesignerCard(c) {
 }
 
 /* === Deep Dives === */
-function buildDeepDives(competitors) {
+function buildDeepDives(competitors, cfg) {
+  var colorMap=cfg?cfg.colorMap:CM;
   return competitors.map(function(c){
-    var col=CM[c.id]||'#888';
+    var col=colorMap[c.id]||'#888';
     var tc=c.threat==='high'?'th':c.threat==='medium'?'tm':'tl';
     var tl=c.threat==='high'?'High threat':c.threat==='medium'?'Medium threat':'Low threat';
     var uid='dd-'+c.id;
@@ -687,22 +801,48 @@ function buildDeepDives(competitors) {
   }).join('');
 }
 
-/* === Render All === */
+/* === Render TAP === */
 function renderAll(d) {
   document.getElementById('sw-text').textContent=d.soWhat||'No strategic insight available — check back Monday.';
   document.getElementById('ticker-track').innerHTML=buildTicker(d.winLoss);
   document.getElementById('alerts-row').innerHTML=buildAlerts(d.alerts);
-  document.getElementById('threat-row').innerHTML=buildThreatRow(d.competitors);
-  document.getElementById('radar-chart').innerHTML=buildRadar(d.competitors);
-  document.getElementById('score-table').innerHTML=buildScoreTable(d.competitors);
-  document.getElementById('ws-items').innerHTML=buildWhiteSpace(d.competitors);
+  document.getElementById('threat-row').innerHTML=buildThreatRow(d.competitors,TAP_CFG);
+  document.getElementById('radar-chart').innerHTML=buildRadar(d.competitors,TAP_CFG);
+  document.getElementById('score-table').innerHTML=buildScoreTable(d.competitors,TAP_CFG);
+  document.getElementById('ws-items').innerHTML=buildWhiteSpace(d.competitors,TAP_CFG);
   var legendHtml='<div class="rl-item"><div class="rl-swatch" style="background:#1a56db"></div>TAP</div>'
     +d.competitors.map(function(c){
       return '<div class="rl-item"><div class="rl-swatch" style="background:'+(CM[c.id]||'#888')+'"></div>'+x(c.name)+'</div>';
     }).join('');
   document.getElementById('radar-legend').innerHTML=legendHtml;
-  document.getElementById('kill-grid').innerHTML=buildKillGrid(d.competitors);
-  document.getElementById('dd-list').innerHTML=buildDeepDives(d.competitors);
+  document.getElementById('kill-grid').innerHTML=buildKillGrid(d.competitors,TAP_CFG);
+  document.getElementById('dd-list').innerHTML=buildDeepDives(d.competitors,TAP_CFG);
+}
+
+/* === Render INSZoom === */
+function renderIZ(d) {
+  document.getElementById('iz-sw-text').textContent=d.soWhat||'No strategic insight available — check back Monday.';
+  document.getElementById('iz-ticker-track').innerHTML=buildTicker(d.winLoss);
+  document.getElementById('iz-alerts-row').innerHTML=buildAlerts(d.alerts);
+  document.getElementById('iz-threat-row').innerHTML=buildThreatRow(d.competitors,IZ_CFG);
+  document.getElementById('iz-radar-chart').innerHTML=buildRadar(d.competitors,IZ_CFG);
+  document.getElementById('iz-score-table').innerHTML=buildScoreTable(d.competitors,IZ_CFG);
+  document.getElementById('iz-ws-items').innerHTML=buildWhiteSpace(d.competitors,IZ_CFG);
+  var legendHtml='<div class="rl-item"><div class="rl-swatch" style="background:#1a56db"></div>INSZoom</div>'
+    +d.competitors.map(function(c){
+      return '<div class="rl-item"><div class="rl-swatch" style="background:'+(IZ_CM[c.id]||'#888')+'"></div>'+x(c.name)+'</div>';
+    }).join('');
+  document.getElementById('iz-radar-legend').innerHTML=legendHtml;
+  document.getElementById('iz-kill-grid').innerHTML=buildKillGrid(d.competitors,IZ_CFG);
+  document.getElementById('iz-dd-list').innerHTML=buildDeepDives(d.competitors,IZ_CFG);
+}
+
+/* === Tab Switch === */
+function switchTab(tab) {
+  document.getElementById('tap-view').style.display=tab==='tap'?'':'none';
+  document.getElementById('iz-view').style.display=tab==='iz'?'':'none';
+  document.getElementById('tab-tap').classList.toggle('active',tab==='tap');
+  document.getElementById('tab-iz').classList.toggle('active',tab==='iz');
 }
 
 /* === Skeleton === */
@@ -894,6 +1034,375 @@ function getDefaultData() {
   };
 }
 
+/* === Default Data — INSZoom === */
+function getDefaultDataIZ() {
+  return {
+    generatedAt:"2026-04-29T07:00:00Z",
+    soWhat:"Deel's immigration bundle is converting existing HR customers without a competitive RFP — every INSZoom AE needs the 'feature vs. platform' positioning ready before Q2 enterprise renewals.",
+    alerts:[
+      {severity:"critical",headline:"Deel Activating Immigration for All Enterprise HR Customers",impact:"Direct threat to INSZoom renewals at accounts where HR drives the immigration decision.",detail:"Deel is activating immigration as a default feature for enterprise HR customers on annual plans. Customers using INSZoom alongside Deel HR are being contacted to consolidate. Three renewal conversations have already cited Deel in Q1 2026.",action:"Deploy the 'feature vs. platform' brief immediately. One RFE at the wrong time costs more than a year of INSZoom fees — get the attorney quality comparison in front of every account with a Deel HR relationship."},
+      {severity:"warning",headline:"Imagility AI Demos Winning Law Firm RFPs",impact:"Accelerating shortlisting in boutique law firm segment — a core INSZoom customer base.",detail:"Imagility's AI petition drafting demos are generating shortlist appearances in 60–70% of law firm RFPs in 2026, up from under 30% in 2024. Their generative AI for H-1B petitions is resonating strongly with high-volume attorneys.",action:"Lead with INSZoom's compliance track record — '20+ years, millions of cases filed' is the risk argument Imagility can't match. Add the enterprise depth comparison on HR portal and multi-entity corporate support."},
+      {severity:"info",headline:"Envoy Global Closing Core Weakness with Law Firm Network Expansion",impact:"Their 2024 funding is going directly toward addressing the black-box attorney criticism.",detail:"Envoy raised $14M in 2024 and is building a vetted law firm partner network to reduce opacity in complex case handling. This closes their most cited weakness in enterprise evaluations against INSZoom.",action:"Shift emphasis to direct attorney relationship control — INSZoom puts your firm's attorney on the case with full case history, not an Envoy network partner with unknown accountability."}
+    ],
+    winLoss:[
+      {outcome:"win",competitor:"docketwise",context:"Corporate legal team, 450 cases/year",reason:"INSZoom's HR portal and enterprise reporting gave corporate visibility Docketwise couldn't provide"},
+      {outcome:"win",competitor:"eimmigration",context:"Regional immigration law firm, platform migration",reason:"Modern web UI, AI form pre-fill, and FN portal replaced legacy desktop workflow"},
+      {outcome:"loss",competitor:"envoy",context:"Fortune 500 tech company, 800+ annual cases",reason:"Envoy's Workday-embedded module and dedicated account management won the executive decision"},
+      {outcome:"win",competitor:"imagility",context:"Mid-size immigration law firm, 300 cases/year",reason:"INSZoom's case breadth and compliance track record addressed the risk concern Imagility couldn't resolve"},
+      {outcome:"loss",competitor:"deel",context:"Tech startup, 200 employees, first immigration hire",reason:"HR team was already on Deel and activated immigration without a standalone procurement cycle"},
+      {outcome:"win",competitor:"remote",context:"Manufacturing company, direct H-1B sponsorship",reason:"Remote's EOR-only immigration scope ruled them out — INSZoom handled direct sponsorship they couldn't"}
+    ],
+    competitors:[
+      {
+        id:'envoy',name:'Envoy Global',tagline:'Managed immigration service + software',threat:'high',threatDelta:'up',
+        silverBullet:"Ask: 'When your Envoy-assigned attorney handles a complex case, who has the attorney-client relationship — you or Envoy? What happens if you want to switch?'",
+        landmineQuestions:[
+          "At your current hiring volume, what's the per-employee annual cost — and how does that scale at 2× headcount?",
+          "When you need legal advice on an edge case, do you get direct attorney access or go through a case manager?",
+          "What jurisdictions does Envoy's network not cover — and what's the SLA when they need a new attorney partner?"
+        ],
+        counterNarratives:[
+          {claim:"Envoy includes attorneys so we don't need a law firm.",rebuttal:"Envoy's managed network works for standard cases. The moment you hit a complex multi-jurisdiction situation, you still need an independent attorney — and that attorney won't have full case history if it was managed through Envoy."},
+          {claim:"Envoy integrates with our HRIS so we only need one system.",rebuttal:"HRIS integration is table stakes — INSZoom has it too. The question is case depth: Envoy's software is built around their managed service model. A dedicated immigration platform gives your attorneys full case control."},
+          {claim:"Envoy is better for global companies.",rebuttal:"Envoy's strength is US immigration. For true global mobility the managed network creates a patchwork of attorney relationships. INSZoom with your law firm gives you a single consistent platform across jurisdictions."}
+        ],
+        strengths:[
+          {title:'Embedded managed service model',detail:'Envoy provides both software and a managed attorney network, handling the entire process from document collection to USCIS submission — strong for HR teams that want a hands-off experience.',source:'Envoy Global product overview; G2 reviews 2024–2025'},
+          {title:'Deep enterprise HR integrations',detail:'Native integrations with Workday, SAP SuccessFactors, Oracle HCM, and ADP. Immigration cases trigger automatically on hire or transfer within the HR system.',source:'Envoy Global integrations page; HR Tech partnership announcements 2024'},
+          {title:'Strong US enterprise client base',detail:'Serves enterprise companies including Salesforce, Siemens, and Boeing. Strong corporate HR buyer momentum where HR drives the immigration decision.',source:'Envoy Global customer page; case studies 2024–2025'},
+          {title:'Recent $14M funding and growth momentum',detail:'Series B extension in 2024, expanding product team and global attorney network. Active enterprise HR pipeline growth.',source:'Envoy Global funding announcement (2024); LinkedIn employee growth data'}
+        ],
+        weaknesses:[
+          {title:'Black-box process with limited attorney control',detail:'Law firms lose visibility when Envoy manages cases. Attorneys cannot use their own workflows — creating friction in law firm partnerships and enterprise legal team governance.',source:'Immigration attorney forum discussions (ILW.com); G2 law firm user reviews 2024'},
+          {title:'Weaker law firm functionality',detail:'Envoy is built for corporate HR buyers, not immigration attorneys. Law firm features like billing, docketing, and custom form workflows are underdeveloped.',source:'G2 immigration software category comparison; Capterra law firm segment reviews 2024'},
+          {title:'Cost scales quickly for high-volume employers',detail:'Per-employee pricing makes Envoy expensive for enterprises with high immigration volumes. 200+ active cases/year see significant cost premiums vs per-seat alternatives.',source:'G2 pricing reviews; Vendr anonymous deal data 2024'}
+        ],
+        tapAngle:'INSZoom gives law firms and corporate teams full control of their case process — not a managed service that locks you into a third-party attorney network. With stronger form coverage, direct attorney relationships, and a proven compliance track record, INSZoom is the choice where immigration quality and attorney accountability matter.',
+        watchSignal:'Envoy is aggressively hiring enterprise sales talent and expanding HR portal capabilities. Their 2024 funding targets replacing standalone immigration software at enterprise HRIS accounts. Watch for Workday and SuccessFactors embedded workflows that could reduce standalone immigration software demand.',
+        roadmap:{
+          recentReleases:[
+            {title:'Workday embedded immigration module',tag:'shipped',detail:'Native Workday integration where immigration cases are created, tracked, and closed entirely within Workday — eliminating separate logins.',source:'Envoy Global + Workday partner announcement (2024)'},
+            {title:'AI document classification at intake',tag:'shipped',detail:'Automated document review that classifies, verifies, and flags incomplete documents at intake — reducing attorney review time by 40% in pilots.',source:'Envoy Global product blog (2024); HR Tech conference demo (2024)'}
+          ],
+          upcomingItems:[
+            {title:'Global mobility expansion — UK, Canada, Australia',tag:'soon',detail:'Expanding attorney network for major English-speaking immigration markets, targeting multinational employers currently using separate tools per jurisdiction.',source:'Envoy Global careers page — international attorney roles (2025); investor briefing'},
+            {title:'AI-powered case timeline prediction',tag:'planned',detail:'Predictive engine estimating USCIS approval timelines, flagging cases at risk of delay before they miss critical dates.',source:'Envoy Global roadmap webinar (Q3 2024)'},
+            {title:'Corporate self-service petition builder',tag:'planned',detail:'Allowing HR users to draft standard petitions (H-1B renewals, TN amendments) without attorney involvement for routine cases.',source:'Envoy Global product team LinkedIn posts (2025)'}
+          ],
+          aiFeatures:[
+            {title:'AI document verification at intake',tag:'ai',detail:'Computer vision-based checker that validates passports, I-94s, and supporting documents for completeness, expiry, and legibility at upload.',source:'Envoy Global AI feature page; SHRM HR Technology conference (2024)'},
+            {title:'Automated RFE response drafting',tag:'ai',detail:'AI-assisted drafting of RFE responses using case history and precedent templates — reducing attorney time on routine RFEs by up to 60%.',source:'Envoy Global product update blog (2024)'}
+          ]
+        },
+        scores:{easeOfUse:7,aiCapability:6,caseBreadth:8,enterpriseScale:9,portalUX:7,integrations:8},
+        designerIntel:{
+          brandColors:['#1a56db','#0f172a','#eff6ff','#dbeafe'],
+          designLanguage:'Clean enterprise SaaS aesthetic anchored in navy and blue. Card-based layouts with clear data hierarchy. HR-portal-first design philosophy built for non-technical corporate users rather than attorneys. Recent redesign improved information density significantly.',
+          uxStrengths:['Excellent HRIS-embedded workflow UX','Clean case status dashboard for HR teams','Strong employee (FN) portal experience','Consistent component library across views'],
+          designGaps:['Attorney-facing workflows feel bolted on','Limited customisation for law firm branding','Complex multi-beneficiary case views are dense','Mobile experience is inconsistent'],
+          watchPattern:'Envoy\'s design is optimising for the corporate HR buyer journey. Watch for in-HRIS embedding that removes the standalone portal entirely — a play that could redefine what "immigration software" means for HR teams.'
+        }
+      },
+      {
+        id:'docketwise',name:'Docketwise',tagline:'Law firm immigration practice management',threat:'medium',threatDelta:'stable',
+        silverBullet:"Docketwise is built for law firms — not corporate HR. Ask: 'Where do your HR team and foreign nationals check case status today — in a law firm tool or their own portal?'",
+        landmineQuestions:[
+          "Does Docketwise have a corporate HR portal for internal HR teams to manage immigration requests independently?",
+          "How does Docketwise handle multi-entity corporate structures with multiple legal entities?",
+          "What reporting does Docketwise give HR leadership on immigration program cost and case volume?"
+        ],
+        counterNarratives:[
+          {claim:"Docketwise has the best form automation for law firms.",rebuttal:"Form automation is one dimension. INSZoom matches Docketwise on USCIS forms while adding a full HR portal, FN portal, and corporate reporting that Docketwise doesn't cover."},
+          {claim:"Docketwise's AI form filling saves time.",rebuttal:"AI form filling is becoming table stakes. The differentiator is the complete workflow — from HR request through FN document submission through attorney filing through approval. INSZoom manages the full chain; Docketwise covers one piece."},
+          {claim:"Docketwise is more affordable for our law firm.",rebuttal:"At 300+ cases/year INSZoom's enterprise pricing is more predictable and includes HR and FN portals that Docketwise requires workarounds to replicate."}
+        ],
+        strengths:[
+          {title:'Industry-leading form automation',detail:'200+ USCIS forms with smart conditional logic, pre-population from prior cases, and error validation — the most automated form library in the category.',source:'Docketwise product page; G2 immigration software — forms ratings 2024'},
+          {title:'AI-powered Smart Forms',detail:'AI pre-fills common fields from prior applications, client profiles, and employer data — reducing data entry by up to 80% on renewals.',source:'Docketwise Smart Forms launch blog (2024); G2 reviews 2024–2025'},
+          {title:'Law firm workflow depth',detail:'Built specifically for immigration attorneys — full matter management, billing integration, client portal, deadline tracking, and team assignment workflows.',source:'Docketwise feature overview; AILA attorney community reviews 2024'},
+          {title:'Rapid adoption in law firm segment',detail:'Fast-growing in boutique and mid-size immigration law firms with modern UX at aggressive pricing compared to legacy competitors.',source:'G2 immigration software category growth data; Docketwise LinkedIn growth 2023–2024'}
+        ],
+        weaknesses:[
+          {title:'No corporate HR portal',detail:'Built for law firms, not corporate HR teams. Companies managing immigration have no way to give HR teams or FN employees direct case visibility outside the law firm tool.',source:'Docketwise product documentation; G2 enterprise user reviews 2024'},
+          {title:'Limited enterprise reporting',detail:'Reporting is attorney-centric with minimal executive dashboards or program-level analytics that corporate immigration programs need.',source:'G2 Docketwise reviews — reporting category; Capterra comparison reviews 2024'},
+          {title:'No enterprise support tier',detail:'Standard SaaS ticketing only — no dedicated account management or enterprise SLAs that large corporate legal teams require.',source:'Docketwise pricing page; G2 support rating reviews 2024'}
+        ],
+        tapAngle:'INSZoom serves the full immigration ecosystem — law firms, corporate HR teams, and foreign nationals — through a unified platform. Docketwise\'s law firm depth comes at the cost of corporate visibility and FN experience. For end-to-end immigration program management, INSZoom covers the complete chain.',
+        watchSignal:'Docketwise is iterating quickly on AI features and pricing to capture firms moving off eImmigration. Watch for a corporate HR portal launch — it would be their first direct move into INSZoom\'s strongest territory.',
+        roadmap:{
+          recentReleases:[
+            {title:'Smart Forms AI pre-fill (GA)',tag:'shipped',detail:'AI form pre-population using prior application data, client profiles, and employer records — live across H-1B, L-1, O-1, and TN form series.',source:'Docketwise product announcement (2024); feature changelog'},
+            {title:'Billing integration with Clio & LawPay',tag:'shipped',detail:'Native billing integration allowing firms to issue invoices and track payment directly from case workflows.',source:'Docketwise integration announcement (2024)'}
+          ],
+          upcomingItems:[
+            {title:'Client messaging centre',tag:'soon',detail:'Centralised secure messaging replacing email back-and-forth, with document request threads tied directly to case records.',source:'Docketwise product roadmap blog (Q4 2024)'},
+            {title:'Employer/HR self-service portal',tag:'planned',detail:'A lite HR portal allowing employer contacts to view case status and submit initiation requests — their first move into the corporate buyer persona.',source:'Docketwise product team community forum post (2025)'},
+            {title:'USCIS processing time AI predictor',tag:'planned',detail:'Predictive model estimating case approval timelines using USCIS processing data.',source:'Docketwise feature request thread; AILA Tech committee discussion 2025'}
+          ],
+          aiFeatures:[
+            {title:'Smart Forms AI pre-fill',tag:'ai',detail:'AI pre-populates 200+ USCIS forms from prior applications, reducing attorney data entry by up to 80% on renewals and amendments.',source:'Docketwise Smart Forms documentation (2024)'},
+            {title:'AI deadline detection',tag:'ai',detail:'NLP scans approval notices, I-94 records, and visa stamps to automatically detect expiry dates and generate deadline alerts.',source:'Docketwise AI Deadline Detection feature page (2024)'}
+          ]
+        },
+        scores:{easeOfUse:8,aiCapability:7,caseBreadth:7,enterpriseScale:4,portalUX:6,integrations:5},
+        designerIntel:{
+          brandColors:['#2563eb','#1e3a5f','#eff6ff','#dbeafe'],
+          designLanguage:'Modern law firm SaaS aesthetic — clean blue brand with strong typographic hierarchy. Attorney-first information architecture with case-centric navigation. Good use of status colors for pipeline management. Form builder UI is their strongest design asset.',
+          uxStrengths:['Exceptional form builder UX','Clear case status pipeline views','Good deadline and calendar UI','Fast, responsive interface'],
+          designGaps:['Client/FN portal is basic and unbranded','No dashboard for program-level analytics','Limited white-labelling for law firm branding','Mobile experience limited for complex form workflows'],
+          watchPattern:'Watch Docketwise\'s HR portal development — their designed approach to the employer experience will signal whether they\'re serious about the corporate segment or staying law firm-only.'
+        }
+      },
+      {
+        id:'eimmigration',name:'eImmigration (Cerenade)',tagline:'Legacy desktop immigration software',threat:'low',threatDelta:'down',
+        silverBullet:"Ask: 'When did eImmigration last ship a major product update — and is it a web app or still desktop-first in 2026?'",
+        landmineQuestions:[
+          "Is eImmigration a web app or desktop client — and what's your mobile access story for remote teams?",
+          "When was the last major version update, and how quickly do form updates follow USCIS publication dates?",
+          "What's the self-service experience for foreign nationals submitting documents — portal or email?"
+        ],
+        counterNarratives:[
+          {claim:"eImmigration has the most comprehensive form library.",rebuttal:"Form coverage is their legacy advantage — but accuracy requires timely updates. INSZoom matches the form library while shipping updates faster, offering a web-native interface, and providing HR and FN portals eImmigration doesn't have."},
+          {claim:"We've used eImmigration for years and it works.",rebuttal:"The question isn't whether it works — it's what you're giving up. No mobile access, no AI assistance, no FN self-service portal. The efficiency gap versus modern alternatives is widening every year."},
+          {claim:"Switching immigration software is too risky.",rebuttal:"INSZoom has migrated hundreds of firms from legacy platforms with a dedicated migration team and case data import. The risk of staying on a declining platform is less managed than a structured migration."}
+        ],
+        strengths:[
+          {title:'Widest USCIS form library in the market',detail:'Broadest form coverage of any platform — supporting rare case types and government forms that newer platforms often lack.',source:'eImmigration product documentation; AILA form library comparison 2023'},
+          {title:'20+ year compliance track record',detail:'Long history of government form accuracy and compliance validation that instils trust in conservative law firms and corporate legal teams.',source:'eImmigration company history; customer testimonials'},
+          {title:'Deep installed base loyalty',detail:'Large installed base particularly in boutique immigration firms, creating high switching costs and referral network effects.',source:'G2 immigration software — legacy user segment; market share estimates 2024'}
+        ],
+        weaknesses:[
+          {title:'Dated UI and desktop-first architecture',detail:'Interface has not kept pace with modern SaaS standards. Desktop client still required for full functionality — limiting mobile access and remote work.',source:'G2 reviews 2024 — UI/UX ratings; Capterra reviews citing desktop dependency'},
+          {title:'Minimal AI capability',detail:'No meaningful AI for form pre-fill, document classification, or deadline intelligence — increasingly a dealbreaker in competitive RFPs.',source:'Product feature comparison; G2 AI/automation category ratings 2024'},
+          {title:'Slow product update cycle',detail:'Form updates and new features lag behind USCIS publication dates. Users report needing manual workarounds during transition periods.',source:'eImmigration support forum; G2 user reviews citing update delays 2023–2024'},
+          {title:'No foreign national self-service portal',detail:'Foreign nationals cannot self-submit documents or check case status in a portal — requiring email-based collection that creates compliance risk.',source:'eImmigration feature documentation; G2 enterprise user reviews'}
+        ],
+        tapAngle:'INSZoom offers comparable form coverage with a modern web-native interface, AI-assisted workflows, and a full HR/FN portal suite that eImmigration lacks. For firms evaluating a platform upgrade, INSZoom provides the compliance depth of a legacy system with the speed and UX of a modern SaaS product.',
+        watchSignal:'eImmigration is losing ground in law firm RFPs to Docketwise and Imagility. Watch for a potential acquisition or major UI overhaul — a private equity re-platform would turn their large installed base into a sudden competitive threat.',
+        roadmap:{
+          recentReleases:[
+            {title:'Web interface upgrade (partial)',tag:'shipped',detail:'Partially migrated core case management to a web interface, reducing desktop dependency for standard workflows — full parity not yet achieved.',source:'eImmigration changelog (2024); user community forum'},
+            {title:'USCIS form library quarterly updates',tag:'shipped',detail:'Ongoing quarterly form update releases keeping core USCIS forms current with expanded state-level immigration document coverage.',source:'eImmigration product update log (2024)'}
+          ],
+          upcomingItems:[
+            {title:'Full web migration',tag:'planned',detail:'Stated goal of eliminating desktop client dependency — timeline has slipped twice, current target H2 2025.',source:'eImmigration roadmap webinar (2024); support forum posts'},
+            {title:'Client document portal',tag:'planned',detail:'Basic client-facing document submission portal to replace email-based collection — a long-requested feature finally in development.',source:'eImmigration product blog (2024)'}
+          ],
+          aiFeatures:[
+            {title:'Form pre-fill from prior cases',tag:'ai',detail:'Basic auto-population of repeat fields from prior applications — foundational AI compared to AI-native competitors but their first investment in the area.',source:'eImmigration Q3 2024 product update'}
+          ]
+        },
+        scores:{easeOfUse:5,aiCapability:3,caseBreadth:9,enterpriseScale:6,portalUX:4,integrations:4},
+        designerIntel:{
+          brandColors:['#7c3aed','#1e1b4b','#f5f3ff','#ede9fe'],
+          designLanguage:'Legacy desktop UI patterns translated awkwardly to web. Form-heavy interface with high information density and minimal visual hierarchy. No design system evident — each module was built in a different era. Current web migration is introducing inconsistency between old and new surfaces.',
+          uxStrengths:['Familiar to long-term power users','High information density per screen','Consistent form layout patterns within modules'],
+          designGaps:['No modern component library or design system','Poor empty states and error handling','No mobile-responsive layouts','Overwhelming UI chrome and nested navigation'],
+          watchPattern:'eImmigration\'s web migration is their most significant UX event in a decade. Partial migration states create the worst of both worlds — an attack surface for competitors positioning on modern UX.'
+        }
+      },
+      {
+        id:'imagility',name:'Imagility',tagline:'AI-native immigration platform',threat:'medium',threatDelta:'up',
+        silverBullet:"Imagility wins on AI demos — but ask: 'How many H-1B cap season cases has Imagility processed — and can you speak to a firm that used them for 500+ cases in a single year?'",
+        landmineQuestions:[
+          "What's Imagility's track record on government RFE rates compared to platforms with longer compliance histories?",
+          "How does Imagility handle the full case lifecycle for corporate clients — HR portal, FN portal, and enterprise reporting?",
+          "What's their support model during USCIS premium processing surges — same staff-to-case ratio as established players?"
+        ],
+        counterNarratives:[
+          {claim:"Imagility's AI is more advanced than anything else.",rebuttal:"Imagility demos beautifully. The question is production-grade reliability at scale — INSZoom has processed millions of cases over 20+ years. AI is only as good as the compliance guardrails around it."},
+          {claim:"Imagility will replace legacy immigration software.",rebuttal:"They're growing fast from a small base. INSZoom has the enterprise feature depth — HR portal, multi-entity corporate structure, compliance reporting — that Imagility is still building toward."},
+          {claim:"Imagility is cheaper than INSZoom.",rebuttal:"Entry pricing looks attractive, but enterprise features (HR portal, multi-entity, SSO, dedicated support) step up significantly. Get the fully-loaded enterprise quote before comparing."}
+        ],
+        strengths:[
+          {title:'Best-in-class AI document generation',detail:'Generative AI drafts petitions, support letters, and RFE responses in near-real-time — the most advanced AI implementation in the immigration software category.',source:'Imagility AI features page; G2 reviews 2024–2025 — AI capability ratings'},
+          {title:'Modern, intuitive UX',detail:'Built mobile-first with a clean interface that new users navigate without training. Strong design investment relative to category average.',source:'Imagility product tour; G2 ease-of-use ratings 2024'},
+          {title:'AI questionnaires to USCIS forms',detail:'Foreign nationals answer plain-language questions and the platform generates the correct USCIS form automatically — eliminating manual data entry for attorneys.',source:'Imagility AI Questionnaire documentation (2024)'},
+          {title:'Competitive pricing for small law firms',detail:'Attractive per-user pricing creating significant displacement risk in the small law firm segment currently on eImmigration.',source:'Imagility pricing page; G2 value-for-money ratings 2024'}
+        ],
+        weaknesses:[
+          {title:'Limited enterprise depth',detail:'Multi-entity corporate structures, enterprise SSO, dedicated account management, and advanced compliance reporting are either missing or immature.',source:'G2 enterprise segment reviews 2024; Capterra enterprise comparison'},
+          {title:'Narrower case type coverage',detail:'Core H-1B, L-1, and green card coverage is strong, but less common visa categories and global mobility case types are not fully supported.',source:'Imagility supported case types documentation; user forum questions 2024'},
+          {title:'Short compliance track record',detail:'Founded 2017 — lacks the multi-decade compliance history that conservative law firms and Fortune 500 legal teams use as a risk screening criterion.',source:'Imagility company founding date; LinkedIn company history'}
+        ],
+        tapAngle:'INSZoom offers the enterprise depth, compliance history, and complete three-portal model (attorney + HR + FN) that Imagility is still building toward. For organizations where immigration is mission-critical, INSZoom\'s 20+ year track record reduces operational risk in ways newer AI-first platforms cannot yet match.',
+        watchSignal:'Imagility is the fastest-growing platform in the category with an aggressive AI roadmap. Watch their enterprise feature releases — HR portal depth, multi-entity support, and SSO will be the signals that they\'re moving into direct enterprise competition.',
+        roadmap:{
+          recentReleases:[
+            {title:'AI petition drafting (GA)',tag:'shipped',detail:'Generative AI drafts full H-1B petitions, L-1 transfers, and O-1 extraordinary ability petitions — attorney reviews and approves in minutes rather than hours.',source:'Imagility AI Petition feature launch (2024)'},
+            {title:'Mobile app for foreign nationals',tag:'shipped',detail:'Native iOS and Android apps for FNs to upload documents, complete questionnaires, and track case status from a smartphone.',source:'Imagility mobile app launch announcement (2024)'}
+          ],
+          upcomingItems:[
+            {title:'Corporate HR portal v2',tag:'soon',detail:'Expanded corporate portal with multi-beneficiary management, budget tracking, and executive reporting for in-house corporate immigration teams.',source:'Imagility product roadmap webinar (Q1 2025)'},
+            {title:'Global immigration case support',tag:'planned',detail:'Expanding beyond US immigration to UK, Canada, Australia, and EU work permit cases.',source:'Imagility CEO LinkedIn posts (2025); investor presentation slides'},
+            {title:'AI RFE prediction and prevention',tag:'planned',detail:'Pre-submission AI review identifying petition weaknesses correlated with RFE issuance before filing.',source:'Imagility roadmap blog post (2025)'}
+          ],
+          aiFeatures:[
+            {title:'Generative AI petition drafting',tag:'ai',detail:'AI drafts complete I-129, I-140, and supporting documentation from structured case data — most capable AI document generation in the category.',source:'Imagility AI feature documentation; comparison study 2024'},
+            {title:'AI questionnaire to form conversion',tag:'ai',detail:'Plain-language answers auto-mapped to USCIS form fields — eliminating attorney data entry on routine cases.',source:'Imagility AI Questionnaire documentation (2024)'},
+            {title:'Smart RFE response assistant',tag:'ai',detail:'AI analyses RFE language, identifies required evidence, and drafts a point-by-point response using case record and precedent database.',source:'Imagility RFE Assistant feature page (2024)'}
+          ]
+        },
+        scores:{easeOfUse:8,aiCapability:9,caseBreadth:6,enterpriseScale:5,portalUX:8,integrations:5},
+        designerIntel:{
+          brandColors:['#dc2626','#7f1d1d','#fef2f2','#fecaca'],
+          designLanguage:'AI-first product design with a clean, modern SaaS aesthetic. Red brand system is distinctive in a category dominated by blue. Heavy use of step-by-step guided flows and progress indicators — optimised for first-time users completing complex tasks.',
+          uxStrengths:['Exceptional onboarding and first-run UX','Clear AI result presentation','Strong mobile-responsive design','Good guided workflows for complex forms'],
+          designGaps:['Dashboard depth lacking for power users','Attorney workflow views less mature than client-facing UX','Complex case types feel bolted on','Reporting UI is basic'],
+          watchPattern:'Imagility\'s design investment is focused on FN and intake experience. Watch their corporate HR portal v2 — it will reveal whether their design team can handle enterprise case management complexity without sacrificing the clean UX that differentiates them.'
+        }
+      },
+      {
+        id:'deel',name:'Deel',tagline:'Global HR platform with immigration add-on',threat:'high',threatDelta:'up',
+        silverBullet:"Deel sells immigration as a bundled feature. Ask: 'When your H-1B hits an RFE, does Deel's team handle it in-house — or do they route it to a third-party law firm at extra cost?'",
+        landmineQuestions:[
+          "How many dedicated immigration attorneys does Deel employ in-house versus subcontracting to partner firms?",
+          "What's the SLA for complex cases like PERM labor certification or EB-2 NIW — and what's the escalation path?",
+          "When HR is already on Deel, what's the actual incremental cost of adding immigration vs a standalone platform?"
+        ],
+        counterNarratives:[
+          {claim:"We're already on Deel for HR — immigration is just another feature.",rebuttal:"It's a feature the same way 'free' transfers are a feature on a bank account. When you need a skilled attorney handling a complex L-1A petition, you want a dedicated immigration platform — not a feature ticket in a global HR product."},
+          {claim:"Deel handles immigration for over 150 countries.",rebuttal:"Coverage breadth and depth are different things. Deel's immigration in 150 countries means entry-level visa assistance in many jurisdictions. INSZoom's US depth means attorney-grade quality across every case type they support."},
+          {claim:"Consolidating onto Deel reduces vendor complexity.",rebuttal:"Consolidation makes sense for EOR and payroll. For immigration — where a filing error means a denied visa — the risk of a feature-level service is different from the risk of consolidating HR software."}
+        ],
+        strengths:[
+          {title:'Bundled into existing HR buying motion',detail:'Immigration sits inside a platform already deployed. No new contract or implementation — it\'s an activation switch for existing enterprise Deel customers.',source:'Deel immigration product page; G2 HR platform reviews 2024–2025'},
+          {title:'Global reach across 150+ countries',detail:'EOR and immigration assistance in 150+ countries — the broadest geographic coverage of any competitor, though depth varies significantly by jurisdiction.',source:'Deel global coverage page; HR Tech analyst reports 2024'},
+          {title:'$12B valuation and strong enterprise brand',detail:'Significant marketing spend, growing sales team, and enterprise brand trust from HR buyers who increasingly drive immigration purchasing decisions.',source:'Deel funding announcement (2024); Crunchbase funding data'},
+          {title:'Superior HR/payroll integration depth',detail:'Native integration between payroll, benefits, EOR, and immigration means employment events automatically trigger immigration workflows.',source:'Deel platform integration overview; G2 HR automation ratings 2024'}
+        ],
+        weaknesses:[
+          {title:'Immigration is a feature, not a core product',detail:'Complex petitions, RFEs, and edge cases are routed to third-party partner firms — creating inconsistency in attorney quality and accountability.',source:'Deel immigration support documentation; community forum posts from corporate HR teams'},
+          {title:'No law firm channel model',detail:'Direct-to-employer model bypasses immigration law firms entirely. Organizations using outside counsel cannot use Deel as their case management platform.',source:'Deel product positioning; immigration attorney community feedback'},
+          {title:'Limited complex case depth',detail:'Complex case types (EB-1A, NIW, complex multi-jurisdiction transfers) are not fully supported. High-complexity cases are handed off to partners with limited platform visibility.',source:'G2 Deel immigration reviews 2024; Capterra enterprise immigration comparison'},
+          {title:'Opaque subcontractor attorney network',detail:'When Deel routes to partner firms, corporate HR teams lose visibility into which attorney is handling their case and what the escalation path is.',source:'Deel immigration product FAQ; HR community discussions (Reddit r/humanresources, 2024)'}
+        ],
+        tapAngle:'INSZoom is purpose-built for immigration — not a feature added to an HR platform. For organizations where immigration quality and attorney accountability are mission-critical, INSZoom provides the dedicated case management depth, law firm integration, and compliance track record that Deel\'s bundled feature cannot match.',
+        watchSignal:'Deel is investing in making immigration a first-class feature — dedicated immigration sales headcount, partner law firm network expansion, and case management depth improvements underway. If they close the quality gap, the bundled buying motion becomes a structural threat to standalone immigration platforms.',
+        roadmap:{
+          recentReleases:[
+            {title:'Immigration case dashboard for HR',tag:'shipped',detail:'New HR-facing immigration dashboard consolidating all employee case statuses, expiry dates, and required actions in the main Deel interface.',source:'Deel product update blog (2024); HR Tech award submission'},
+            {title:'Automated visa expiry alerts',tag:'shipped',detail:'Proactive alert system notifying HR and employees of upcoming work authorization and visa expiry dates, integrated with Deel\'s core HR record.',source:'Deel changelog (2024); immigration feature page'}
+          ],
+          upcomingItems:[
+            {title:'Expanded attorney network for complex cases',tag:'soon',detail:'Building a vetted partner law firm network with standardised SLAs for complex case types — addressing the most common criticism of immigration feature quality.',source:'Deel immigration product blog (Q1 2025)'},
+            {title:'Immigration cost management module',tag:'planned',detail:'Budget tracking, cost-per-case analytics, and invoice reconciliation for employer immigration programs.',source:'Deel roadmap webinar (2025); HR analyst briefing'},
+            {title:'AI petition review assistant',tag:'planned',detail:'AI-assisted pre-submission review checking for completeness and common errors before cases enter attorney review.',source:'Deel AI feature roadmap blog (2025)'}
+          ],
+          aiFeatures:[
+            {title:'AI eligibility screening',tag:'ai',detail:'Automated visa eligibility assessment from employee profile data — HR gets a recommended visa category with confidence score before engaging attorneys.',source:'Deel AI immigration features page (2024)'},
+            {title:'Smart document collection',tag:'ai',detail:'AI-generated document checklists tailored to case type, nationality, and employer industry — reducing back-and-forth between HR and foreign nationals.',source:'Deel product changelog (2024)'}
+          ]
+        },
+        scores:{easeOfUse:9,aiCapability:7,caseBreadth:5,enterpriseScale:9,portalUX:9,integrations:9},
+        designerIntel:{
+          brandColors:['#ea580c','#431407','#fff7ed','#fed7aa'],
+          designLanguage:'Premium consumer-grade SaaS design applied to HR complexity. Orange brand is uniquely energetic in the enterprise space. Heavy investment in micro-interactions, onboarding flows, and data visualization. Immigration features have a slightly different design language from the core product.',
+          uxStrengths:['Best-in-class enterprise onboarding UX','Exceptional data dashboard and reporting views','Strong notification and alert system','Premium design that positively influences enterprise buyer perception'],
+          designGaps:['Immigration module UI lags behind core HR design quality','Attorney-facing flows minimal and underdeveloped','Complex case type management feels like an afterthought','Customisation options limited vs standalone platforms'],
+          watchPattern:'Deel is applying premium design resources to the immigration module. When immigration UI reaches parity with core HR, their bundled value proposition becomes much harder to argue against on UX grounds alone. Track their immigration-specific design changelog.'
+        }
+      },
+      {
+        id:'remote',name:'Remote.com',tagline:'Global employment platform with visa support',threat:'medium',threatDelta:'stable',
+        silverBullet:"Remote's immigration support is scoped to the EOR relationship. Ask: 'If we want to sponsor a US H-1B directly as the employer of record — not through Remote — can Remote's platform still manage the case?'",
+        landmineQuestions:[
+          "Does Remote handle direct employer sponsorship immigration, or only cases where Remote is the employer of record?",
+          "What's the case management depth for complex multi-step petitions like PERM + I-140 + I-485 concurrent filing?",
+          "When a foreign national transitions from Remote EOR to direct employment, what happens to their immigration case?"
+        ],
+        counterNarratives:[
+          {claim:"Remote handles global employment and immigration together.",rebuttal:"Remote handles immigration tied to their EOR service. The moment you need to directly sponsor a worker as your own employer — H-1B, green card sponsorship — Remote's immigration coverage doesn't apply."},
+          {claim:"Remote is simpler because it's one platform.",rebuttal:"One platform works when the EOR relationship persists. INSZoom is the platform for direct employer sponsorship — the more complex, higher-value immigration work most enterprises eventually need."},
+          {claim:"Remote has a better employee experience.",rebuttal:"Remote's employee experience is designed for EOR onboarding, not immigration case management. INSZoom's FN portal is purpose-built for the document submission, questionnaire, and case tracking workflows that foreign nationals actually need."}
+        ],
+        strengths:[
+          {title:'Seamless EOR + immigration bundle',detail:'For companies hiring internationally through Remote\'s EOR service, immigration support is fully integrated — no separate vendor relationship required.',source:'Remote.com EOR + immigration overview; G2 global employment reviews 2024'},
+          {title:'Strong HR integration ecosystem',detail:'Native integrations with Rippling, BambooHR, Workday, and Greenhouse — immigration events sync automatically with HR workflows.',source:'Remote.com integrations directory; HR Tech partnership page'},
+          {title:'Modern, clean product design',detail:'One of the cleaner interfaces in the global employment category with high ease-of-use ratings.',source:'G2 ease-of-use ratings 2024; Remote product design blog'},
+          {title:'Competitive pricing for SMB-to-mid-market',detail:'Transparent per-employee pricing accessible to growing companies in the 50–500 employee segment.',source:'Remote.com pricing page; G2 value-for-money ratings 2024'}
+        ],
+        weaknesses:[
+          {title:'Immigration scoped to EOR relationship only',detail:'Remote\'s immigration applies when Remote is the employer of record. Direct employer sponsorship cases (H-1B, PERM, EB green cards) require a separate immigration solution.',source:'Remote.com immigration FAQ; product documentation'},
+          {title:'Shallow complex case coverage',detail:'Standard work visa assistance only — complex case types and multi-step immigration pathways are not supported within the platform.',source:'Remote.com supported case types; G2 enterprise immigration comparison 2024'},
+          {title:'No law firm integration model',detail:'Direct-to-employer service model doesn\'t integrate with immigration law firms — unsuitable for organizations using outside counsel.',source:'Remote.com product positioning; immigration attorney community feedback'}
+        ],
+        tapAngle:'INSZoom handles direct employer sponsorship — H-1B petitions, PERM labor certifications, and green card sponsorships that Remote\'s EOR immigration doesn\'t cover. For organizations with in-house legal teams or outside immigration counsel, INSZoom manages the full case lifecycle regardless of employment structure.',
+        watchSignal:'Remote is expanding immigration coverage beyond EOR-tied cases to capture the direct sponsorship market. Watch for US immigration features that don\'t require Remote EOR — that would be a direct competitive move into INSZoom\'s core segment.',
+        roadmap:{
+          recentReleases:[
+            {title:'Visa support expansion — 30 new countries',tag:'shipped',detail:'Added immigration assistance for 30 additional countries in APAC and LATAM, covering work permit applications and renewal support.',source:'Remote.com product update blog (2024)'},
+            {title:'HR portal case visibility upgrade',tag:'shipped',detail:'New HR dashboard showing all active immigration cases, upcoming expiry dates, and required actions in a unified view.',source:'Remote.com changelog (2024)'}
+          ],
+          upcomingItems:[
+            {title:'Direct sponsorship immigration module',tag:'planned',detail:'Immigration case management for direct employer H-1B and PERM sponsorship — moving beyond EOR-tied cases into direct competition with standalone platforms.',source:'Remote.com product roadmap (2025); investor presentation'},
+            {title:'AI eligibility and pathway advisor',tag:'planned',detail:'AI recommending optimal visa pathways for new hires based on profile, target role, and employer history.',source:'Remote.com roadmap webinar (2025)'}
+          ],
+          aiFeatures:[
+            {title:'AI document checklist generation',tag:'ai',detail:'Automated document requirement lists from employee profile, visa type, and destination country — reducing HR back-and-forth.',source:'Remote.com AI features page (2024)'},
+            {title:'Smart expiry prediction',tag:'ai',detail:'Predictive alerts combining visa expiry, travel history, and case status to flag employees approaching unauthorized status risk.',source:'Remote.com product changelog (2024)'}
+          ]
+        },
+        scores:{easeOfUse:8,aiCapability:6,caseBreadth:4,enterpriseScale:7,portalUX:8,integrations:8},
+        designerIntel:{
+          brandColors:['#0891b2','#164e63','#ecfeff','#cffafe'],
+          designLanguage:'Clean, modern global employment SaaS design. Teal/cyan brand system is fresh and professional. Information architecture optimised for the hiring and onboarding journey rather than case management depth. Strong visual consistency across the platform.',
+          uxStrengths:['Excellent onboarding journey design','Strong global data visualization (maps, country breakdowns)','Clean notification and status design','Consistent, polished component library'],
+          designGaps:['Immigration module UI is thinner than core HR','Complex case workflows underdeveloped','Attorney/law firm portal absent','Dense multi-country case views can be overwhelming'],
+          watchPattern:'Remote\'s design team is strong and product velocity high. Watch how they approach designing for complex immigration workflows if they launch direct sponsorship features — the design challenge is significant and will reveal whether they\'re serious about the category.'
+        }
+      },
+      {
+        id:'oyster',name:'Oyster HR',tagline:'Global employment platform — immigration light',threat:'low',threatDelta:'stable',
+        silverBullet:"Oyster's immigration is a thin wrapper on EOR onboarding. Ask: 'Can Oyster manage a standalone US H-1B petition — without Oyster being the employer of record?'",
+        landmineQuestions:[
+          "Is Oyster's immigration support available for direct employer sponsorship, or only for employees hired through Oyster EOR?",
+          "What happens to an employee's immigration case if they transition from Oyster EOR to direct employment?",
+          "What's the attorney firm behind Oyster's immigration support — and can your legal team work directly with them?"
+        ],
+        counterNarratives:[
+          {claim:"Oyster handles everything including immigration.",rebuttal:"Oyster handles EOR onboarding immigration — which is a simpler function than sponsoring US H-1B or PERM petitions. The moment you need to directly sponsor a worker, Oyster's immigration coverage ends."},
+          {claim:"Oyster is simpler and cheaper than INSZoom.",rebuttal:"For basic global hiring, yes. For a US immigration program with law firms, complex case types, HR portals, and compliance reporting, INSZoom's cost is justified by the functionality gap."},
+          {claim:"Our HR team prefers Oyster's interface.",rebuttal:"Oyster's interface is designed for global payroll onboarding — not immigration case management. Your HR team will feel the difference managing an H-1B case, tracking PERM stages, or generating a compliance report."}
+        ],
+        strengths:[
+          {title:'Clean, easy-to-use HR platform',detail:'Consistently rates highly on ease of use for global employment workflows — strong employer and employee experience for standard EOR hiring.',source:'G2 ease-of-use ratings 2024; Capterra global employment comparison'},
+          {title:'Competitive SMB pricing',detail:'Transparent flat per-employee pricing accessible to growing companies in the 10–200 employee range.',source:'Oyster pricing page; G2 value-for-money ratings 2024'},
+          {title:'Payroll coverage in 180+ countries',detail:'Payroll, benefits, and compliance coverage through local entities — strong for companies building global remote teams.',source:'Oyster global coverage page; HR Tech analyst reports 2024'}
+        ],
+        weaknesses:[
+          {title:'Immigration is surface-level only',detail:'Limited to basic work permit assistance within the EOR model. Complex US immigration case types, direct sponsorship, and law firm workflows are not supported.',source:'Oyster immigration documentation; G2 enterprise user reviews 2024'},
+          {title:'Not designed for legal teams or law firms',detail:'An HR product — no law firm portal, attorney workflow support, docketing, or matter management.',source:'Oyster product feature overview; immigration attorney forum feedback'},
+          {title:'Limited enterprise scale',detail:'Strongest in SMBs. Large enterprise compliance requirements (SOC 2 Type II, advanced SSO, dedicated support) are underdeveloped.',source:'G2 enterprise segment reviews; Capterra enterprise comparison 2024'}
+        ],
+        tapAngle:'INSZoom addresses the direct employer sponsorship use case that Oyster doesn\'t cover — managing H-1B, PERM, and green card petitions through a platform built for immigration attorneys and corporate legal teams. Oyster is an EOR tool; INSZoom is an immigration case management system.',
+        watchSignal:'Oyster is less a direct competitor and more a displacement risk for the HR portal portion of INSZoom\'s value. Watch for any move into US direct sponsorship immigration — that would signal a strategy shift from EOR tool to immigration platform.',
+        roadmap:{
+          recentReleases:[
+            {title:'HR dashboard visa tracker',tag:'shipped',detail:'New HR dashboard view showing current visa and work authorization status for all international employees.',source:'Oyster product update blog (2024)'},
+            {title:'Automated work permit renewal reminders',tag:'shipped',detail:'Automated alerts to HR and employees for upcoming permit renewals across all jurisdictions.',source:'Oyster changelog (2024)'}
+          ],
+          upcomingItems:[
+            {title:'Enhanced immigration support tier',tag:'planned',detail:'Premium immigration support tier with dedicated specialists and expanded case type coverage.',source:'Oyster pricing page footnote (2025)'},
+            {title:'HRIS integration expansion',tag:'planned',detail:'Additional native HRIS integrations with Rippling, Gusto, and ADP.',source:'Oyster integrations roadmap (2025)'}
+          ],
+          aiFeatures:[
+            {title:'AI work permit eligibility check',tag:'ai',detail:'Automated eligibility screening for common work permit types across 50+ countries — helps HR understand feasibility before engaging attorneys.',source:'Oyster AI features page (2024)'}
+          ]
+        },
+        scores:{easeOfUse:8,aiCapability:5,caseBreadth:3,enterpriseScale:5,portalUX:7,integrations:7},
+        designerIntel:{
+          brandColors:['#65a30d','#1a2e05','#f7fee7','#d9f99d'],
+          designLanguage:'Friendly, approachable HR SaaS design with a distinctive green brand. Clean layouts optimised for the employer onboarding journey. Consumer-influenced design makes it accessible for non-technical HR users.',
+          uxStrengths:['Friendly, approachable visual design','Good onboarding and empty state UX','Clear global map and country selector UI','Strong mobile responsiveness'],
+          designGaps:['Immigration UI is minimal and underdeveloped','No case management depth','Law firm/attorney UI absent','Complex workflow visualisation is poor'],
+          watchPattern:'Oyster\'s design is optimised for their EOR sweet spot. Any move into case-heavy immigration management would require significant design investment they haven\'t made yet. Monitor their product design blog and hiring for immigration product designers as early signals.'
+        }
+      }
+    ]
+  };
+}
+
 /* === Auth Gate === */
 (function(){
   var PASS='Kx9#mP2$vL8@nQ4!';
@@ -956,6 +1465,10 @@ function getDefaultData() {
 /* === Init === */
 window.onload=function(){
   renderSkeleton();
+  /* Always render INSZoom with default data immediately */
+  renderIZ(getDefaultDataIZ());
+
+  /* Fetch live TAP intel */
   fetch('/api/intel')
     .then(function(r){
       if(r.status===404)throw new Error('not_ready');
